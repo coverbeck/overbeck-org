@@ -1,4 +1,6 @@
 # Robert S. Overbeck and the Arisan Maru
+
+![photo](rso_army.png)
           
 My father, Robert S. Overbeck, was a prisoner of war in the Pacific during World War II. He was one of the 5 survivors out of approximately 1,800 prisoners on the [Arisan Maru](http://www.google.com/search?hl=en&amp;q=arisan+maru&amp;btnG=Google+Search), a Japanese ship carrying American POWs that was sunk by a U.S. submarine. Here is an account, [Voyage to China](Voyage_to_China.md), that he wrote about it. He submitted it to the New Yorker, but it was rejected. He passed away shortly after if was rejected, in 1972.
 

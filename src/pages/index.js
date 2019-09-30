@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
+const IndexPage = ({data}) => (
   <Layout>
     <SEO title="Home" />
     <h1>Hi people</h1>
@@ -14,8 +14,27 @@ const IndexPage = () => (
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
       <Image />
     </div>
+    <div dangerouslySetInnerHTML={{ __html: data.allFile.edges[0].node.childMarkdownRemark.html }} />
     <Link to="/page-2/">Go to page 2</Link>
   </Layout>
 )
 
 export default IndexPage
+
+export const query = graphql`
+  {
+    allFile(filter: {name: {eq: "index"}}) {
+      edges {
+        node {
+          id
+          name
+          extension
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+  }
+`
+
