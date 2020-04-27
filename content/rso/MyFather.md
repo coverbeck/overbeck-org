@@ -1,6 +1,6 @@
 # Robert S. Overbeck and the Arisan Maru
 
-![photo](../../src/images/rso_army.png)
+![photo](../../src/assets/rso_army.png)
           
 My father, Robert S. Overbeck, was a prisoner of war in the Pacific during World
 War II. He was one of the 5 survivors out of approximately 1,800 prisoners on

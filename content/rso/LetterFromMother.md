@@ -1,3 +1,3 @@
 Letter from RSO Mother
 
-![photo](../../src/images/AliciaLetter.jpg)
+![photo](../../src/assets/AliciaLetter.jpg)
