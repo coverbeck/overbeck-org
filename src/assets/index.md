@@ -1,4 +1,4 @@
-![phodto](../assets/homepageme.jpg)
+![Moi](../assets/homepageme.jpg)
 
 I have very occasionally blogged about technical things <a href="http://blogs.codegear.com/charlesoverbeck/" title="http://blogs.codegear.com/charlesoverbeck/">here</a>.
 
