@@ -1,7 +1,8 @@
 <div class="center">
-  <nav>
-    <a [routerLink]="['/home']">Home</a>
-    <a [routerLink]="['/rso']">My father</a>
-  </nav>
+  <mat-menu>
+    <a [routerLink]="['/home']" mat-menu-item>Home</a>
+    <a [routerLink]="['/rso']" mat-menu-item>My father</a>
+    <a [routerLink]="['/comics']" mat-menu-item>Comics</a>
+  </mat-menu>
 </div>
 <router-outlet></router-outlet>
