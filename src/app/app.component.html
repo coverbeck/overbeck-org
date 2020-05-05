@@ -1,8 +1,14 @@
-<div class="center">
-  <mat-menu>
-    <a [routerLink]="['/home']" mat-menu-item>Home</a>
-    <a [routerLink]="['/rso']" mat-menu-item>My father</a>
-    <a [routerLink]="['/comics']" mat-menu-item>Comics</a>
-  </mat-menu>
-</div>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <h1>Charles Overbeck's Web Site</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="['/home']" >Home</a>
+      <a mat-button [routerLink]="['/rso']" >My father</a>
+      <a mat-button [routerLink]="['/covid']">COVID-19</a>
+      <a mat-button [routerLink]="['/comics']" >Comics</a>
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
 <router-outlet></router-outlet>

@@ -1,0 +1,15 @@
+<h1>COVID-19 Stuff</h1>
+<p>I have a hard time finding the graphs I want, so here are my own</p>
+<div fxLayout="column">
+  <div>Data from:
+    <ul>
+      <li><a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a></li>
+      <li><a href="https://ourworldindata.org/">Our World in Data</a></li>
+    </ul>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="20%"></div>
+    <app-santa-cruz-covid fxFlex="60%" [data]="data"></app-santa-cruz-covid>
+    <div fxFlex="20%"></div>
+  </div>
+</div>
