@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing"
 import { async, ComponentFixture, TestBed } from "@angular/core/testing"
 
 import { ComicsComponent } from "./comics.component"
@@ -8,7 +9,8 @@ describe('ComicsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ComicsComponent ]
+      declarations: [ ComicsComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   }));

@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http"
 import { Component, OnInit } from "@angular/core"
-import { CovidService } from "./covid.service"
 
 export class CovidRow {
   "County Name": string = "";
@@ -22,7 +21,7 @@ export class CovidComponent implements OnInit {
 
   public data: CovidRow[] =  [];
 
-  constructor(private httpClient: HttpClient, private covidService: CovidService) {
+  constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {

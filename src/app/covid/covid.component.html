@@ -9,7 +9,12 @@
   </div>
   <div fxLayout="row">
     <div fxFlex="20%"></div>
-    <app-santa-cruz-covid fxFlex="60%" [data]="data"></app-santa-cruz-covid>
+    <app-chhs-graph fxFlex="60%" [data]="data" [chartType]="0"></app-chhs-graph>
+    <div fxFlex="20%"></div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="20%"></div>
+    <app-chhs-graph fxFlex="60%" [data]="data" [chartType]="1"></app-chhs-graph>
     <div fxFlex="20%"></div>
   </div>
 </div>
