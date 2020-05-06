@@ -5,10 +5,10 @@ import { CovidRow } from "../covid/covid.component"
 
 @Component({
   selector: 'app-santa-cruz-covid',
-  templateUrl: './santa-cruz-covid.component.html',
-  styleUrls: ['./santa-cruz-covid.component.scss']
+  templateUrl: './chhs-graph.component.html',
+  styleUrls: ['./chhs-graph.component.scss']
 })
-export class SantaCruzCovidComponent implements OnInit, OnChanges {
+export class ChhsGraphComponent implements OnInit, OnChanges {
 
   @Input()
   public data: CovidRow[] = [];
@@ -26,7 +26,7 @@ export class SantaCruzCovidComponent implements OnInit, OnChanges {
   };
   public lineChartColors: Color[] = [
     {
-      borderColor: 'black',
+      borderColor: 'red',
       backgroundColor: 'rgba(255,0,0,0.3)',
     },
   ];

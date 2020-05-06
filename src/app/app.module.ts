@@ -12,11 +12,11 @@ import { MarkdownModule } from "ngx-markdown"
 
 import { AppRoutingModule } from "./app-routing.module"
 import { AppComponent } from "./app.component"
+import { ChhsGraphComponent } from "./chhs-graph/chhs-graph.component"
 import { ComicsComponent } from "./comics/comics.component"
 import { CovidComponent } from "./covid/covid.component"
 import { HomeComponent } from "./home/home.component"
 import { RsoComponent } from "./rso/rso.component"
-import { SantaCruzCovidComponent } from "./santa-cruz-covid/santa-cruz-covid.component"
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { SantaCruzCovidComponent } from "./santa-cruz-covid/santa-cruz-covid.com
     HomeComponent,
     ComicsComponent,
     CovidComponent,
-    SantaCruzCovidComponent
+    ChhsGraphComponent
   ],
   imports: [
     BrowserModule,

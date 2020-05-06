@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing"
 
-import { SantaCruzCovidComponent } from "./santa-cruz-covid.component"
+import { ChhsGraphComponent } from "./chhs-graph.component"
 
 describe('SantaCruzCovidComponent', () => {
-  let component: SantaCruzCovidComponent;
-  let fixture: ComponentFixture<SantaCruzCovidComponent>;
+  let component: ChhsGraphComponent;
+  let fixture: ComponentFixture<ChhsGraphComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SantaCruzCovidComponent ]
+      declarations: [ ChhsGraphComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SantaCruzCovidComponent);
+    fixture = TestBed.createComponent(ChhsGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
