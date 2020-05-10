@@ -45,13 +45,13 @@ jobs:
           steps:
             - get_workspace
             - aws-s3/copy:
-                from: dist
+                from: dist/overbeck
                 to: 's3://${AWS_BUCKET}'
                 arguments: |
                   --recursive \
                   --exclude index.html
             - aws-s3/copy:
-                from: dist/index.html
+                from: dist/overbeck/index.html
                 to: 's3://${AWS_BUCKET}'
                 arguments: |
                   --cache-control max-age=0
