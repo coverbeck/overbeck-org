@@ -22,7 +22,7 @@ jobs:
           command: bash -i -c 'npm run lint';
       - run:
           name: Run tests
-          command: bash -i -c 'npm run test'
+          command: bash -i -c 'npm run test -- --watch=false'
       - run:
           name: Build
           command: bash -i -c 'npm run build.prod'
