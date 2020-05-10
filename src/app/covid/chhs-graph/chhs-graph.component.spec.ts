@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing"
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChhsGraphComponent } from "./chhs-graph.component"
+import { ChhsGraphComponent } from './chhs-graph.component';
 
 describe('SantaCruzCovidComponent', () => {
   let component: ChhsGraphComponent;

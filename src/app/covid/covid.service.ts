@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core"
-import { CovidRow } from "../shared/models/CovidRow"
+import { Injectable } from '@angular/core';
+import { CovidRow } from '../shared/models/CovidRow';
 
 @Injectable({
   providedIn: 'root'

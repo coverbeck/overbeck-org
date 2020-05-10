@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http"
-import { Component, OnInit } from "@angular/core"
-import { CovidRow } from "../shared/models/CovidRow"
-import { CovidService } from "./covid.service"
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { CovidRow } from '../shared/models/CovidRow';
+import { CovidService } from './covid.service';
 
 export enum CovidChart {
   TotalCases,

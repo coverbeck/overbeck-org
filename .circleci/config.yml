@@ -19,13 +19,13 @@ jobs:
           command: bash -i -c 'npm ci'
       - run:
           name: Run lint
-          command: npm run lint
+          command: bash -i -c 'npm run lint';
       - run:
           name: Run tests
-          command: npm run test
+          command: bash -i -c 'npm run test -- --watch=false'
       - run:
           name: Build
-          command: npm run build.prod
+          command: bash -i -c 'npm run build.prod'
       - persist_to_workspace:
           root: .
           paths:
@@ -60,7 +60,7 @@ workflows:
   version: 2
   everything:
     jobs:
-      - lint_and_tests_and_build:
+      - lint_and_tests_and_build
       - upload_to_s3:
           requires:
             - lint_and_tests_and_build

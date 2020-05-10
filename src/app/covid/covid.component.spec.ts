@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing"
-import { async, ComponentFixture, TestBed } from "@angular/core/testing"
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { CovidComponent } from "./covid.component"
+import { CovidComponent } from './covid.component';
 
 describe('CovidComponent', () => {
   let component: CovidComponent;
@@ -10,7 +11,7 @@ describe('CovidComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CovidComponent ],
-      imports: [ HttpClientTestingModule]
+      imports: [ HttpClientTestingModule, MatProgressSpinnerModule]
     })
     .compileComponents();
   }));

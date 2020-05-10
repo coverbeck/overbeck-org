@@ -1,7 +1,7 @@
-import { TestBed } from "@angular/core/testing"
-import { CovidRow } from "../../shared/models/CovidRow"
+import { TestBed } from '@angular/core/testing';
+import { CovidRow } from '../../shared/models/CovidRow';
 
-import { ChhsGraphService } from "./chhs-graph.service"
+import { ChhsGraphService } from './chhs-graph.service';
 
 const SMALL_RESPONSE: Array<CovidRow> = [
   {
