@@ -81,13 +81,23 @@ describe('ChhsGraphService', () => {
   });
 
   it('should calculate cases by day', () => {
-    const chartDataSets = service.casesByDay(SMALL_RESPONSE, LA_COUNTY)
+    const chartDataSets = service.cumulativeCasesByDay(SMALL_RESPONSE, LA_COUNTY)
     expect(chartDataSets.data).toEqual([3502, 4040, 4566]); // 3 data points for LA
     expect(chartDataSets.label).toEqual(LA_COUNTY);
   });
 
   it('should count new cases by day', () => {
     const newCasesByDay = service.newCasesByDay(SMALL_RESPONSE, LA_COUNTY);
-    expect(newCasesByDay.data).toEqual([538, 526]);
+    expect(newCasesByDay[0].data).toEqual([538, 526]);
+  })
+
+  it(' should count state totals', () => {
+    const stateCasesByDay = service.stateCumulativeCasesByDay(SMALL_RESPONSE);
+    expect(stateCasesByDay.data).toEqual([3747, 4375, 4922])
+  });
+
+  it('should calculate moving average', () => {
+    const data = [1, 2, 3, 4, 5];
+    expect(service.movingAverage(data, 3)).toEqual([null, 2, 3, 4, null]);
   })
 });

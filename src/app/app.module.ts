@@ -4,9 +4,10 @@ import { FlexLayoutModule } from "@angular/flex-layout"
 import { MatButtonModule } from "@angular/material/button"
 import { MatListModule } from "@angular/material/list"
 import { MatMenuModule } from "@angular/material/menu"
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { BrowserModule } from "@angular/platform-browser"
-import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { ChartsModule } from "ng2-charts"
 import { MarkdownModule } from "ngx-markdown"
 
@@ -34,11 +35,12 @@ import { RsoComponent } from "./rso/rso.component"
     HttpClientModule,
     FlexLayoutModule,
     MarkdownModule.forRoot({ loader: HttpClient }),
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MatListModule,
     MatButtonModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

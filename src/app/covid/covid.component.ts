@@ -1,6 +1,13 @@
 import { HttpClient } from "@angular/common/http"
 import { Component, OnInit } from "@angular/core"
 
+export enum CovidChart {
+  TotalCases,
+  CasesByDay,
+  StateTotalCases,
+  StateCasesByDay
+}
+
 export class CovidRow {
   "County Name": string = "";
   "Most Recent Date": string = "";
@@ -20,12 +27,19 @@ export class CovidRow {
 export class CovidComponent implements OnInit {
 
   public data: CovidRow[] =  [];
+  public loading = true;
+
+  readonly CovidChart: typeof CovidChart = CovidChart;
 
   constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
     this.httpClient.get<Array<CovidRow>>("/api/covid")
-      .subscribe(data => this.data = data );
+      .subscribe(data => {
+          this.data = data;
+          this.loading = false;
+        }
+      );
   }
 }
