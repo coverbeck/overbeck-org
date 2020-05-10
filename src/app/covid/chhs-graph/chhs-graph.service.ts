@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core"
 import { ChartDataSets } from "chart.js"
-import { CovidRow } from "../covid/covid.component"
+import { CovidRow } from "../../shared/models/CovidRow"
 
 export class StateData {
   date: string;

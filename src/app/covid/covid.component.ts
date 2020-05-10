@@ -1,22 +1,12 @@
 import { HttpClient } from "@angular/common/http"
 import { Component, OnInit } from "@angular/core"
+import { CovidRow } from "../shared/models/CovidRow"
 
 export enum CovidChart {
   TotalCases,
   CasesByDay,
   StateTotalCases,
   StateCasesByDay
-}
-
-export class CovidRow {
-  "County Name": string = "";
-  "Most Recent Date": string = "";
-  "Total Count Confirmed": string;
-  "Total Count Deaths": string;
-  "COVID-19 Positive Patients": string;
-  "Suspected COVID-19 Positive Patients": string;
-  "ICU COVID-19 Positive Patients": string;
-  "ICU COVID-19 Suspected Patients": string;
 }
 
 @Component({

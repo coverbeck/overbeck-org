@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core"
 import { ChartDataSets, ChartOptions, ChartType } from "chart.js"
 import { Color, Label } from "ng2-charts"
-import { CovidChart, CovidRow } from "../covid/covid.component"
+import { CovidRow } from "../../shared/models/CovidRow"
+import { CovidChart } from "../covid.component"
 import { ChhsGraphService } from "./chhs-graph.service"
 
 @Component({
