@@ -1,0 +1,82 @@
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.0
+  lint_unit_test_coverage:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/buildpack-deps:18.04-browsers
+jobs:
+  lint_and_tests_and_build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/buildpack-deps:18.04-browsers
+    steps:
+      - checkout
+      - install_container_dependencies
+      - run:
+          name: Install dependencies
+          command: bash -i -c 'npm ci'
+      - run:
+          name: Run lint
+          command: npm run lint
+      - run:
+          name: Run tests
+          command: npm run test
+      - run:
+          name: Build
+          command: npm run build.prod
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  upload_to_s3:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:2.7
+    parameters:
+      aws_bucket:
+        type: string
+        default: "${AWS_BUCKET}"
+    steps:
+      - when:
+          condition: <<parameters.aws_bucket>>
+          steps:
+            - get_workspace
+            - aws-s3/copy:
+                from: dist
+                to: 's3://${AWS_BUCKET}'
+                arguments: |
+                  --recursive \
+                  --exclude index.html
+            - aws-s3/copy:
+                from: dist/index.html
+                to: 's3://${AWS_BUCKET}'
+                arguments: |
+                  --cache-control max-age=0
+
+workflows:
+  version: 2
+  everything:
+    jobs:
+      - lint_and_tests_and_build:
+      - upload_to_s3:
+          requires:
+            - lint_and_tests_and_build
+          filters:
+            branches:
+              only: master
+
+
+commands:
+  install_container_dependencies:
+    steps:
+      - run:
+          name: Install npm
+          command: |
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            bash -i -c 'nvm install'
+  get_workspace:
+    steps:
+      - attach_workspace:
+          at: .
