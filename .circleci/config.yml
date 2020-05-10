@@ -60,7 +60,7 @@ workflows:
   version: 2
   everything:
     jobs:
-      - lint_and_tests_and_build:
+      - lint_and_tests_and_build
       - upload_to_s3:
           requires:
             - lint_and_tests_and_build
