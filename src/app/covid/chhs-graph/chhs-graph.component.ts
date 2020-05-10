@@ -17,19 +17,17 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
   @Input()
   public chartType: CovidChart;
   @Input()
-  public county: string
+  public county: string;
   @Input()
   public title: string;
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-  ];
+  public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: ChartOptions = {
     responsive: true,
     title: {
       display: true,
-      text: "Total Cases by County"
+      text: 'Total Cases by County'
     }
   };
   public lineChartColors: Color[] = [
@@ -51,12 +49,12 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
     if (this.data.length) {
       this.lineChartOptions.title.text = this.title;
       const counties = [
-        "Los Angeles",
-        "Monterey",
-        "San Diego",
-        "Santa Clara",
-        "Santa Cruz",
-        "San Francisco"
+        'Los Angeles',
+        'Monterey',
+        'San Diego',
+        'Santa Clara',
+        'Santa Cruz',
+        'San Francisco'
       ];
       switch (this.chartType) {
         case CovidChart.TotalCases:
@@ -64,17 +62,18 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
           break;
         case CovidChart.CasesByDay:
           this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.county);
-          this.lineChartType = "bar";
+          this.lineChartType = 'bar';
           break;
         case CovidChart.StateTotalCases:
           this.lineChartData = [this.chhsGraphService.stateCumulativeCasesByDay(this.data)];
           break;
         case CovidChart.StateCasesByDay:
-          this.lineChartData = this.chhsGraphService.chartDataForArray(this.chhsGraphService.differences(this.chhsGraphService.rawData(this.data)))
-          this.lineChartType = "bar";
+          this.lineChartData = this.chhsGraphService.chartDataForArray(
+            this.chhsGraphService.differences(this.chhsGraphService.rawData(this.data)));
+          this.lineChartType = 'bar';
 
       }
-      this.lineChartLabels = this.data.filter(row => row["County Name"] === counties[0]).map(row => row["Most Recent Date"]);
+      this.lineChartLabels = this.data.filter(row => row['County Name'] === counties[0]).map(row => row['Most Recent Date']);
     }
   }
 

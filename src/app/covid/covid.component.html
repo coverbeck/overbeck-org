@@ -4,6 +4,7 @@
   <div>Data is from  <a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a>
       <!--      <li><a href="https://ourworldindata.org/">Our World in Data</a></li>-->
   </div>
+  <div>Data from {{ startDate }} to {{ endDate }}.</div>
   <div fxLayout="row" *ngIf="loading" style="padding-top: 20px;">
     <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
   </div>
