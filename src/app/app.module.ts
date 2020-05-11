@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComicsComponent } from './comics/comics.component';
 import { ChhsGraphComponent } from './covid/chhs-graph/chhs-graph.component';
+import { ChhsHorzBarGraphComponent } from './covid/chhs-horz-bar-graph/chhs-horz-bar-graph.component';
 import { CovidComponent } from './covid/covid.component';
 import { HomeComponent } from './home/home.component';
 import { RsoComponent } from './rso/rso.component';
@@ -26,7 +27,8 @@ import { RsoComponent } from './rso/rso.component';
     HomeComponent,
     ComicsComponent,
     CovidComponent,
-    ChhsGraphComponent
+    ChhsGraphComponent,
+    ChhsHorzBarGraphComponent
   ],
   imports: [
     BrowserModule,

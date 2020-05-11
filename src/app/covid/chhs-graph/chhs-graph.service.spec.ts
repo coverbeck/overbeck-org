@@ -100,4 +100,10 @@ describe('ChhsGraphService', () => {
     const data = [1, 2, 3, 4, 5];
     expect(service.movingAverage(data, 3)).toEqual([null, 2, 3, 4, null]);
   });
+  it('should aggregate by county', () => {
+    const lastResults = service.totalCasesByCounty(SMALL_RESPONSE);
+    expect(lastResults.length).toBe(2);
+    expect(lastResults[0]['Total Count Confirmed']).toBe('4566');
+    }
+  );
 });

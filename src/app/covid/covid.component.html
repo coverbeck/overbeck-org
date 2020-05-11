@@ -8,13 +8,13 @@
   <div fxLayout="row" *ngIf="loading" style="padding-top: 20px;">
     <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
   </div>
-  <div fxLayout="row wrap" *ngIf="!loading">
-    <app-chhs-graph  [data]="data" [chartType]="CovidChart.TotalCases" title="Total cases in selected counties"></app-chhs-graph>
+  <div fxLayout="row wrap" *ngIf="!loading" fxLayoutAlign="center center">
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Santa Cruz'" title="New Cases by Day in Santa Cruz" ></app-chhs-graph>
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'San Francisco'" title="New Cases by Day in San Francisco"></app-chhs-graph>
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Santa Clara'" title="New Cases by Day in Santa Clara"></app-chhs-graph>
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Los Angeles'" title="New Cases by Day in Los Angeles"></app-chhs-graph>
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New cases by day in California"></app-chhs-graph>
+    <app-chhs-horz-bar-graph [data]="data"></app-chhs-horz-bar-graph>
     <!--    <app-chhs-graph fxFlex="33%" [data]="data" [chartType]="CovidChart.StateCasesByDay"></app-chhs-graph>-->
   </div>
 </div>

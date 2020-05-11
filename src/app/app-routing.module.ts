@@ -7,6 +7,7 @@ import { RsoComponent } from './rso/rso.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'rso', component: RsoComponent},
   { path: 'comics', component: ComicsComponent},

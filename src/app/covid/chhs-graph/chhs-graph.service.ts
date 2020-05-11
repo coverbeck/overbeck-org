@@ -3,14 +3,23 @@ import { ChartDataSets } from 'chart.js';
 import { CovidRow } from '../../shared/models/CovidRow';
 
 export class StateData {
-  date: string;
   confirmed: number;
   deaths: number;
   positivePatients: number;
   suspectedPatients: number;
   icuPositivePatients: number;
   icuSuspectedPatients: number;
+
+  constructor(covidRow: CovidRow) {
+    this.confirmed = Number(covidRow['Total Count Confirmed']);
+    this.deaths = Number(covidRow['Total Count Deaths']);
+    this.positivePatients = Number(covidRow['COVID-19 Positive Patients']);
+    this.suspectedPatients = Number(covidRow['Suspected COVID-19 Positive Patients']);
+    this.icuPositivePatients = Number(covidRow['ICU COVID-19 Positive Patients']);
+    this.icuSuspectedPatients = Number(covidRow['ICU COVID-19 Suspected Patients']);
+  }
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -118,5 +127,19 @@ export class ChhsGraphService {
       }
     }
     return result;
+  }
+
+  public totalCasesByCounty(rows: Array<CovidRow>, max = 20): Array<CovidRow> {
+    const map = new Map<string, CovidRow>();
+    rows.forEach(row => map.set(row['County Name'], row));
+    const values: IterableIterator<CovidRow> = map.values();
+    const ret = new Array<CovidRow>();
+    let val = values.next();
+    while (!val.done) {
+      ret.push(val.value);
+      val = values.next();
+    }
+    ret.sort((a, b) => Number(b['Total Count Confirmed']) - Number(a['Total Count Confirmed']));
+    return ret.slice(0, max);
   }
 }
