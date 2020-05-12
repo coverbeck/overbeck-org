@@ -87,7 +87,7 @@ describe('ChhsGraphService', () => {
   });
 
   it('should count new cases by day', () => {
-    const newCasesByDay = service.newCasesByDay(SMALL_RESPONSE, LA_COUNTY);
+    const newCasesByDay = service.newCasesByDay(SMALL_RESPONSE, [LA_COUNTY]);
     expect(newCasesByDay[0].data).toEqual([538, 526]);
   });
 
@@ -106,4 +106,7 @@ describe('ChhsGraphService', () => {
     expect(lastResults[0]['Total Count Confirmed']).toBe('4566');
     }
   );
+  it('should calc cases per 100,000', () => {
+    expect(service.casesPerHundredThousand(SMALL_RESPONSE, 'Los Angeles')).toBeCloseTo(45.48);
+  });
 });

@@ -17,7 +17,7 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
   @Input()
   public chartType: CovidChart;
   @Input()
-  public county: string;
+  public counties: Array<string>;
   @Input()
   public title: string;
 
@@ -48,20 +48,9 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.data.length) {
       this.lineChartOptions.title.text = this.title;
-      const counties = [
-        'Los Angeles',
-        'Monterey',
-        'San Diego',
-        'Santa Clara',
-        'Santa Cruz',
-        'San Francisco'
-      ];
       switch (this.chartType) {
-        case CovidChart.TotalCases:
-          this.lineChartData = counties.map(county => this.chhsGraphService.cumulativeCasesByDay(this.data, county));
-          break;
         case CovidChart.CasesByDay:
-          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.county);
+          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.counties);
           this.lineChartType = 'bar';
           break;
         case CovidChart.StateTotalCases:
@@ -73,7 +62,8 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
           this.lineChartType = 'bar';
 
       }
-      this.lineChartLabels = this.data.filter(row => row['County Name'] === counties[0]).map(row => row['Most Recent Date']);
+      const firstCounty = this.data[0]['County Name'];
+      this.lineChartLabels = this.data.filter(row => row['County Name'] === firstCounty).map(row => row['Most Recent Date']);
     }
   }
 

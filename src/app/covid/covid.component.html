@@ -1,20 +1,40 @@
 <div fxLayout="column" style="align-items: center;">
   <div class="mat-display-1">California COVID-19 Graphs</div>
-  <div *ngIf="!loading" class="mat-h2">From {{ startDate }} to {{ endDate }}.</div>
+  <div *ngIf="!loading" class="mat-h2">From {{ startDate }} to {{ endDate }}</div>
   <div class="mat-h3">I have a hard time finding the graphs I want, so here are my own.
-  Data is from  <a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a>
-      <!--      <li><a href="https://ourworldindata.org/">Our World in Data</a></li>-->
+    Data is from  <a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a>
+    <!--      <li><a href="https://ourworldindata.org/">Our World in Data</a></li>-->
+  </div>
+  <div>
+
   </div>
   <div fxLayout="row" *ngIf="loading" style="padding-top: 20px;">
     <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
   </div>
   <div fxLayout="row wrap" *ngIf="!loading" fxLayoutAlign="center center">
-    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Santa Cruz'" title="New Cases by Day in Santa Cruz" ></app-chhs-graph>
-    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'San Francisco'" title="New Cases by Day in San Francisco"></app-chhs-graph>
-    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Santa Clara'" title="New Cases by Day in Santa Clara"></app-chhs-graph>
-    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [county]="'Los Angeles'" title="New Cases by Day in Los Angeles"></app-chhs-graph>
     <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New cases by day in California"></app-chhs-graph>
-    <app-chhs-horz-bar-graph [data]="data"></app-chhs-horz-bar-graph>
-    <!--    <app-chhs-graph fxFlex="33%" [data]="data" [chartType]="CovidChart.StateCasesByDay"></app-chhs-graph>-->
+    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="New Cases by Day in Santa Cruz" ></app-chhs-graph>
+  </div>
+  <div fxLayout="row wrap" *ngIf="!loading" fxLayoutAlign="center center">
+    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
+                     [counties]="['San Francisco', 'Santa Clara', 'Alameda', 'San Mateo', 'Contra Costa', 'Marin', 'Solano', 'Sonoma', 'Napa']"
+                     title="Bay Area Cases by Day (Alameda, Contra Costa, Marin, Napa, Santa Clara, San Francisco, Solano, Sonoma)">
+
+    </app-chhs-graph>
+    <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Imperial', 'Kern', 'Los Angeles', 'Orange', 'Riverside', 'San Bernardino', 'San Diego', 'Santa Barbara', 'San Luis Obispo', 'Ventura']"
+                     title="SoCal Cases by Day ( Imperial, Kern, Los Angeles, Orange, Riverside, San Bernardino, San Diego, Santa Barbara, San Luis Obispo, Ventura)"></app-chhs-graph>
+<!--    <mat-form-field>-->
+<!--      <mat-label>-->
+<!--        Pick a county, any county-->
+<!--      </mat-label>-->
+<!--      <mat-select  [(value)]="county">-->
+<!--        <mat-option *ngFor="let c of counties" value="{{ c }}">-->
+<!--          {{ c }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+<!--    <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' Cases by Day'"></app-chhs-graph>-->
+    <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="false"></app-chhs-horz-bar-graph>
+    <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="true"></app-chhs-horz-bar-graph>
   </div>
 </div>
