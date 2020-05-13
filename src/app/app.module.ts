@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +50,7 @@ import { RsoComponent } from './rso/rso.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

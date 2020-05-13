@@ -23,13 +23,8 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
 
   public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
-  public lineChartOptions: ChartOptions = {
-    responsive: true,
-    title: {
-      display: true,
-      text: 'Total Cases by County'
-    }
-  };
+  public lineChartOptions: ChartOptions = { };
+
   public lineChartColors: Color[] = [
     {
       borderColor: 'red',
@@ -47,7 +42,7 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.data.length) {
-      this.lineChartOptions.title.text = this.title;
+      this.lineChartOptions = this.chartOptions(this.title);
       switch (this.chartType) {
         case CovidChart.CasesByDay:
           this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.counties);
@@ -65,6 +60,16 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
       const firstCounty = this.data[0]['County Name'];
       this.lineChartLabels = this.data.filter(row => row['County Name'] === firstCounty).map(row => row['Most Recent Date']);
     }
+  }
+
+  private chartOptions(title: string): ChartOptions {
+    return {
+      responsive: true,
+      title: {
+        display: true,
+        text: title
+      }
+    };
   }
 
 }

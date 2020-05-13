@@ -29,7 +29,7 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
     responsive: true,
     title: {
       display: true,
-      text: 'Cases by County'
+      text: 'Total onfirmed cases by county'
     }
   };
   public lineChartLegend = true;
@@ -47,7 +47,7 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
       if (this.popAdjusted) {
         // TODO: Way ugly calculating cases per hundred thousand twice, forcing
         // it to be passed in as an array
-        this.lineChartOptions.title.text = 'Cases by County per 100,000';
+        this.lineChartOptions.title.text = 'Total confirmed cases by county per 100,000';
         this.lineChartData = [
           {
             data: covidRows.map(row => this.chhsGraphService
