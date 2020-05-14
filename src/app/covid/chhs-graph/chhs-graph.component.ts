@@ -59,6 +59,11 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
       }
       const firstCounty = this.data[0]['County Name'];
       this.lineChartLabels = this.data.filter(row => row['County Name'] === firstCounty).map(row => row['Most Recent Date']);
+
+      // If we're getting the differences, we don't have the diff for the very first date
+      if (this.chartType === CovidChart.CasesByDay || this.chartType === CovidChart.StateCasesByDay) {
+        this.lineChartLabels = this.lineChartLabels.slice(1);
+      }
     }
   }
 

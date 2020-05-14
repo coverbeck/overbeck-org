@@ -1,9 +1,18 @@
 <div fxLayout="column" style="align-items: center;">
-  <div class="mat-h1">California COVID-19 Graphs</div>
+  <div class="mat-h1" style="padding-top: 10px;">California COVID-19 Graphs</div>
   <div *ngIf="!loading" class="mat-h2">From {{ startDate }} to {{ endDate }}</div>
   <div class="mat-h3">I have a hard time finding the graphs I want, so here are my own.
-    Data is from  <a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a>
+    Data is from  <a href="https://data.chhs.ca.gov/dataset/california-covid-19-hospital-data-and-case-statistics" target="_blank">California Health and Human Open Data Portal</a>.
     <!--      <li><a href="https://ourworldindata.org/">Our World in Data</a></li>-->
+  </div>
+  <div>
+    <div class="mat-h3">Notes</div>
+    <ul>
+      <li>There are probably errors on how I process the data on this page. Don't rely on this page for anything serious.</li>
+      <li>I don't when and how often CHHS refreshes their data. Seems to happen more than once a day, but I don't know the pattern.</li>
+      <li>Population statistics from 2019 US Census.</li>
+      <li>Confirmed cases are just that, as defined by CHHS. Which as we know is also determined by the level of testing.</li>
+    </ul>
   </div>
   <div fxLayout="row" *ngIf="loading" >
     <mat-spinner></mat-spinner>

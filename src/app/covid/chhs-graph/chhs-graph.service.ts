@@ -276,8 +276,7 @@ export class ChhsGraphService {
 
   public newCasesByDay(rows: Array<CovidRow>, counties: Array<string>): ChartDataSets[] {
     const countyRows = rows.filter(row => counties.some(county => row['County Name'] === county));
-
-    const newCases = this.newCases(this.rawData(countyRows));
+    const newCases = this.differences(this.rawData(countyRows));
     return this.chartDataForArray(newCases);
   }
 
@@ -293,17 +292,6 @@ export class ChhsGraphService {
         type: 'line',
         fill: false,
       }];
-  }
-
-  public newCases(rows: Array<number>): Array<number> {
-    return rows.map((val, index, arr) => {
-      const cases = val;
-      if (index === 0) {
-        return 0;
-      } else {
-        return cases - arr[index - 1];
-      }
-    }).slice(1);
   }
 
   public stateCumulativeCasesByDay(rows: Array<CovidRow>): ChartDataSets {
@@ -322,7 +310,7 @@ export class ChhsGraphService {
       } else {
         return val - arr[index - 1];
       }
-    });
+    }).slice(1);
   }
 
   public rawData(rows: Array<CovidRow>) {

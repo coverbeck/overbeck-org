@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 import { MarkdownComponent } from './markdown.component';
 
@@ -8,7 +10,16 @@ describe('MarkdownComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarkdownComponent ]
+      declarations: [ MarkdownComponent ],
+      providers: [
+        { provide: ActivatedRoute,
+        useValue: {
+            paramMap: of({
+              get: () => 'foo.md'
+            })
+        }
+        }
+      ]
     })
     .compileComponents();
   }));
