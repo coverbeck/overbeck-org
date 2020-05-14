@@ -22,6 +22,7 @@ import { ChhsGraphComponent } from './covid/chhs-graph/chhs-graph.component';
 import { ChhsHorzBarGraphComponent } from './covid/chhs-horz-bar-graph/chhs-horz-bar-graph.component';
 import { CovidComponent } from './covid/covid.component';
 import { HomeComponent } from './home/home.component';
+import { MarkdownComponent } from './rso/markdown/markdown.component';
 import { RsoComponent } from './rso/rso.component';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { RsoComponent } from './rso/rso.component';
     ComicsComponent,
     CovidComponent,
     ChhsGraphComponent,
-    ChhsHorzBarGraphComponent
+    ChhsHorzBarGraphComponent,
+    MarkdownComponent
   ],
   imports: [
     BrowserModule,
