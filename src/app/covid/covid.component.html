@@ -22,17 +22,17 @@
   <mat-tab label="New Cases">
     <div fxLayout="column" style="align-items: center;">
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New confirmed cases by day in California"></app-chhs-graph>
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="New confirmed cases by day in Santa Cruz" ></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New confirmed cases by day in California" [metric]="'Total Count Confirmed'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="New confirmed cases by day in Santa Cruz" [metric]="'Total Count Confirmed'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
                          [counties]="['San Francisco', 'Santa Clara', 'Alameda', 'San Mateo', 'Contra Costa', 'Marin', 'Solano', 'Sonoma', 'Napa']"
-                         title="Bay Area confirmed cases by Day (Alameda, Contra Costa, Marin, Napa, Santa Clara, San Francisco, Solano, Sonoma)">
+                         title="Bay Area confirmed cases by Day (Alameda, Contra Costa, Marin, Napa, Santa Clara, San Francisco, Solano, Sonoma)" [metric]="'Total Count Confirmed'">
 
         </app-chhs-graph>
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Imperial', 'Kern', 'Los Angeles', 'Orange', 'Riverside', 'San Bernardino', 'San Diego', 'Santa Barbara', 'San Luis Obispo', 'Ventura']"
-                         title="SoCal confirmed cases by Day ( Imperial, Kern, Los Angeles, Orange, Riverside, San Bernardino, San Diego, Santa Barbara, San Luis Obispo, Ventura)"></app-chhs-graph>
+                         title="SoCal confirmed cases by Day ( Imperial, Kern, Los Angeles, Orange, Riverside, San Bernardino, San Diego, Santa Barbara, San Luis Obispo, Ventura)" [metric]="'Total Count Confirmed'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <mat-form-field>
@@ -45,7 +45,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' confirmed cases by day'"></app-chhs-graph>
+        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' confirmed cases by day'" [metric]="'Total Count Confirmed'"></app-chhs-graph>
       </div>
     </div>
   </mat-tab>
@@ -56,6 +56,14 @@
       </div>
       <div fxLayout="row" style="flex-grow: 1" >
         <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="true"></app-chhs-horz-bar-graph>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Deaths">
+    <div fxLayout="column" style="align-items: center;">
+      <div fxLayout="row wrap"  fxLayoutAlign="center center">
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="COVID Deaths by day in California" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="COVID Deaths by day in Santa Cruz" [metric]="'Total Count Deaths'"></app-chhs-graph>
       </div>
     </div>
   </mat-tab>

@@ -87,7 +87,7 @@ describe('ChhsGraphService', () => {
   });
 
   it('should count new cases by day', () => {
-    const newCasesByDay = service.newCasesByDay(SMALL_RESPONSE, [LA_COUNTY]);
+    const newCasesByDay = service.newCasesByDay(SMALL_RESPONSE, 'Total Count Confirmed', [LA_COUNTY]);
     expect(newCasesByDay[0].data).toEqual([538, 526]);
   });
 

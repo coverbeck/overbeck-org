@@ -5,9 +5,7 @@ import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
 
 export enum CovidChart {
-  TotalCases,
   CasesByDay,
-  StateTotalCases,
   StateCasesByDay
 }
 

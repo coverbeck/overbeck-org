@@ -20,6 +20,8 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
   public counties: Array<string>;
   @Input()
   public title: string;
+  @Input()
+  public metric: 'Total Count Confirmed' | 'Total Count Deaths';
 
   public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
@@ -45,15 +47,11 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
       this.lineChartOptions = this.chartOptions(this.title);
       switch (this.chartType) {
         case CovidChart.CasesByDay:
-          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.counties);
+          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.metric, this.counties);
           this.lineChartType = 'bar';
           break;
-        case CovidChart.StateTotalCases:
-          this.lineChartData = [this.chhsGraphService.stateCumulativeCasesByDay(this.data)];
-          break;
         case CovidChart.StateCasesByDay:
-          this.lineChartData = this.chhsGraphService.chartDataForArray(
-            this.chhsGraphService.differences(this.chhsGraphService.rawData(this.data)));
+          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.metric);
           this.lineChartType = 'bar';
 
       }

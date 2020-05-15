@@ -274,17 +274,18 @@ export class ChhsGraphService {
     return caCounties.map(c => c.County);
   }
 
-  public newCasesByDay(rows: Array<CovidRow>, counties: Array<string>): ChartDataSets[] {
-    const countyRows = rows.filter(row => counties.some(county => row['County Name'] === county));
-    const newCases = this.differences(this.rawData(countyRows));
-    return this.chartDataForArray(newCases);
+  public newCasesByDay(rows: Array<CovidRow>, metric: 'Total Count Confirmed' | 'Total Count Deaths',
+                       counties: Array<string> | null = null): ChartDataSets[] {
+    const countyRows = rows.filter(row => !counties || counties.some(county => row['County Name'] === county));
+    const newCases = this.differences(this.rawData(countyRows, metric));
+    return this.chartDataForArray(newCases, metric);
   }
 
 
-  public chartDataForArray(newCases: Array<number>) {
+  public chartDataForArray(newCases: Array<number>, metric: 'Total Count Confirmed' | 'Total Count Deaths') {
     return [{
       data: newCases,
-      label: 'New Cases',
+      label: metric === 'Total Count Confirmed' ? 'New Cases' : 'Deaths',
     },
       {
         data: this.movingAverage(newCases, 5),
@@ -295,7 +296,7 @@ export class ChhsGraphService {
   }
 
   public stateCumulativeCasesByDay(rows: Array<CovidRow>): ChartDataSets {
-    const data = this.rawData(rows);
+    const data = this.rawData(rows, 'Total Count Confirmed');
     return {
       data,
       label: 'California',
@@ -313,7 +314,7 @@ export class ChhsGraphService {
     }).slice(1);
   }
 
-  public rawData(rows: Array<CovidRow>) {
+  public rawData(rows: Array<CovidRow>, metric: 'Total Count Confirmed' | 'Total Count Deaths') {
     const data = [];
     let acc = 0;
     let date = null;
@@ -325,7 +326,7 @@ export class ChhsGraphService {
         }
         date = row['Most Recent Date'];
       }
-      acc = acc + Number(row['Total Count Confirmed']);
+      acc = acc + Number(row[metric]);
     }
     data.push(acc);
     return data;
