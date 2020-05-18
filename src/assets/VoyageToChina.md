@@ -43,7 +43,7 @@ position. So, when the sirens sounded, it looked like a question of who was
 going to break and run first, the prisoners or the guards. However, after some
 30 minutes of stomach-churning anxiety the "all clear" sounded and the orderly
 loading of the ship began - 600 prisoners in hold No. 1 on top of loose coal and
-l205 in the tween-decks of hold No. 2 with the remaining hold (No.3), which had
+1205 in the tween-decks of hold No. 2 with the remaining hold (No.3), which had
 no tween-decks, being left empty.
 
 Hold No. 2. tween-decks had apparently been fitted out for troop transport
