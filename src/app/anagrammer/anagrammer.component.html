@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutAlign="" style="padding: 10px;">
+  <form [formGroup]="anagramForm" (ngSubmit)="onSubmit(anagramForm.value)">
+    <div>
+      <label for="input">
+        Input
+      </label>
+      <input id="input" type="text" formControlName="input">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+  <mat-list>
+    <mat-list-item *ngFor="let d of dataSource" style="height: auto;">{{ d }}</mat-list-item>
+  </mat-list>
+</div>
