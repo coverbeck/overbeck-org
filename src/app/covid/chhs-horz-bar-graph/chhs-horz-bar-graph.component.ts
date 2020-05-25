@@ -29,7 +29,7 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
     responsive: true,
     title: {
       display: true,
-      text: 'Total onfirmed cases by county'
+      text: 'Total Confirmed cases by county'
     }
   };
   public lineChartLegend = true;
