@@ -9,6 +9,7 @@ import { AnagrammerService } from './anagrammer.service';
 })
 export class AnagrammerComponent implements OnInit {
   public anagramForm;
+  public dataSource: Array<string> = [];
 
   constructor(private formBuilder: FormBuilder, private service: AnagrammerService) {
     this.anagramForm = this.formBuilder.group({
@@ -21,8 +22,8 @@ export class AnagrammerComponent implements OnInit {
 
   onSubmit(data) {
     this.service.getAnagrams(data.input).subscribe(resp => {
-
-    })
+      this.dataSource = resp;
+    });
     this.anagramForm.reset();
   }
 

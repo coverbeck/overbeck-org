@@ -1,14 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnagrammerService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   public getAnagrams(input: string): Observable<Array<string>> {
-    return of(['abc', 'def']);
+    const req = {input: input};
+    return this.httpClient.post<Array<string>>('/api/anagram', req);
   }
 }
