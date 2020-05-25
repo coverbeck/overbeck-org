@@ -9,8 +9,8 @@ export class AnagrammerService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAnagrams(input: string): Observable<Array<string>> {
-    const req = {input: input};
+  public getAnagrams(inp: string): Observable<Array<string>> {
+    const req = {input: inp};
     return this.httpClient.post<Array<string>>('/api/anagram', req);
   }
 }
