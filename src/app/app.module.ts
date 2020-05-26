@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,6 +25,7 @@ import { ComicsComponent } from './comics/comics.component';
 import { ChhsGraphComponent } from './covid/chhs-graph/chhs-graph.component';
 import { ChhsHorzBarGraphComponent } from './covid/chhs-horz-bar-graph/chhs-horz-bar-graph.component';
 import { CovidComponent } from './covid/covid.component';
+import { TotalsByCountyTableComponent } from './covid/totals-by-county-table/totals-by-county-table.component';
 import { HomeComponent } from './home/home.component';
 import { MarkdownComponent } from './rso/markdown/markdown.component';
 import { RsoComponent } from './rso/rso.component';
@@ -38,7 +40,8 @@ import { RsoComponent } from './rso/rso.component';
     ChhsGraphComponent,
     ChhsHorzBarGraphComponent,
     MarkdownComponent,
-    AnagrammerComponent
+    AnagrammerComponent,
+    TotalsByCountyTableComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { RsoComponent } from './rso/rso.component';
     MatSelectModule,
     MatTabsModule,
     ReactiveFormsModule,
+    MatSortModule,
     MatTableModule,
   ],
   providers: [],

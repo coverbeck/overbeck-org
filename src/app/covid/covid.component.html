@@ -50,14 +50,24 @@
     </div>
   </mat-tab>
   <mat-tab label="Total Cases">
-    <div fxLayout="column" style="align-items: center;">
-      <div fxLayout="row"  >
-        <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="false"></app-chhs-horz-bar-graph>
-      </div>
-      <div fxLayout="row" style="flex-grow: 1" >
-        <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="true"></app-chhs-horz-bar-graph>
-      </div>
-    </div>
+    <mat-tab-group>
+      <mat-tab label="Graphs">
+        <div fxLayout="column" style="align-items: center;">
+          <div fxLayout="row"  >
+            <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="false"></app-chhs-horz-bar-graph>
+          </div>
+          <div fxLayout="row" style="flex-grow: 1" >
+            <app-chhs-horz-bar-graph [data]="data" [popAdjusted]="true"></app-chhs-horz-bar-graph>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Table">
+        <div fxLayout="column" style="align-items: center;">
+          <app-totals-by-county-table [data]="data"></app-totals-by-county-table>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
   </mat-tab>
   <mat-tab label="Deaths">
     <div fxLayout="column" style="align-items: center;">

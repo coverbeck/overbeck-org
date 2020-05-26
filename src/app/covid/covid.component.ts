@@ -40,5 +40,9 @@ export class CovidComponent implements OnInit {
           this.loading = false;
         }
       );
+    this.httpClient.get('https://covidtracking.com/api/v1/states/ca/daily.json')
+      .subscribe(data => {
+        console.log(data);
+      });
   }
 }
