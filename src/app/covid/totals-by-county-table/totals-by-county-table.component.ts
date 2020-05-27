@@ -20,7 +20,7 @@ export class TotalsByCountyTableComponent implements OnInit, OnChanges {
   @Input()
   public data: Array<CovidRow>;
   dataSource: MatTableDataSource<CountyData>;
-  displayedColumns: string[] = ['county', 'total', 'totalPer100K'];
+  displayedColumns: string[] = ['index', 'county', 'total', 'totalPer100K', 'population'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
 
@@ -39,7 +39,8 @@ export class TotalsByCountyTableComponent implements OnInit, OnChanges {
         return {
           county: row['County Name'],
           total: Number(row['Total Count Confirmed']),
-          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row['County Name'])
+          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row['County Name']),
+          population: this.chhsGraphService.population(row['County Name'])
         };
       });
       this.dataSource.sort = this.sort;

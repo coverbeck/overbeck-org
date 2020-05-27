@@ -1,22 +1,30 @@
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 80vh;" matSort>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 80vw;" matSort>
 
-  <!-- Name Column -->
+  <ng-container matColumnDef="index">
+    <mat-header-cell *matHeaderCellDef class="number"></mat-header-cell>
+    <mat-cell *matCellDef="let i = index"> {{ i + 1 }}</mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="county">
     <mat-header-cell *matHeaderCellDef mat-sort-header>County</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.county}} </mat-cell>
   </ng-container>
 
-  <!-- Weight Column -->
   <ng-container matColumnDef="total">
-    <mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: right; justify-content: flex-end"> Confirmed </mat-header-cell>
-    <mat-cell *matCellDef="let element" style="text-align: right; justify-content: flex-end"> {{element.total | number}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number"> Confirmed </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.total | number}} </mat-cell>
   </ng-container>
 
-  <!-- Symbol Column -->
   <ng-container matColumnDef="totalPer100K">
-    <mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: right; justify-content: flex-end"> Confirmed per 100K </mat-header-cell>
-    <mat-cell *matCellDef="let element" style="text-align: right; justify-content: flex-end"> {{element.totalPer100K | number:'1.2-2'}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number"> Confirmed per 100K </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.totalPer100K | number:'1.2-2'}} </mat-cell>
   </ng-container>
+
+  <ng-container matColumnDef="population">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">County Population</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.population | number}} </mat-cell>
+  </ng-container>
+
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

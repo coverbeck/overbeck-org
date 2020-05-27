@@ -249,6 +249,10 @@ const caCounties = [
   {
     County: 'Yolo',
     Population: 220500
+  },
+  {
+    County: 'Yuba',
+    Population: 78668
   }
 ];
 
@@ -363,11 +367,15 @@ export class ChhsGraphService {
   public casesPerHundredThousand(rows: Array<CovidRow>, county: string): number {
     const rowsForCounty = rows.filter(row => row['County Name'] === county);
     const cases = Number(rowsForCounty[rowsForCounty.length - 1]['Total Count Confirmed']);
-    const info = caCounties.find(c => c.County === county);
-    if (!info) {
+    const population = this.population(county);
+    if (!population) {
       return 0;
     }
-    const population = info.Population;
     return (cases * 100000 / population);
+  }
+
+  public population(county: string): number {
+    const theCounty = caCounties.find(c => c.County === county);
+    return theCounty && theCounty.Population || 0;
   }
 }
