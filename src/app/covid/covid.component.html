@@ -27,12 +27,12 @@
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
-                         [counties]="['San Francisco', 'Santa Clara', 'Alameda', 'San Mateo', 'Contra Costa', 'Marin', 'Solano', 'Sonoma', 'Napa']"
-                         title="Bay Area confirmed cases by Day (Alameda, Contra Costa, Marin, Napa, Santa Clara, San Francisco, Solano, Sonoma)" [metric]="'Total Count Confirmed'">
+                         [counties]="NORCAL_COUNTIES"
+                         title="{{ NORCAL_CONFIRMED_TITLE}}" [metric]="'Total Count Confirmed'">
 
         </app-chhs-graph>
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Imperial', 'Kern', 'Los Angeles', 'Orange', 'Riverside', 'San Bernardino', 'San Diego', 'Santa Barbara', 'San Luis Obispo', 'Ventura']"
-                         title="SoCal confirmed cases by Day ( Imperial, Kern, Los Angeles, Orange, Riverside, San Bernardino, San Diego, Santa Barbara, San Luis Obispo, Ventura)" [metric]="'Total Count Confirmed'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="SOCAL_COUNTIES"
+                         title="{{ SOCAL_CONFIRMED_TITLE}}" [metric]="'Total Count Confirmed'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <mat-form-field>
@@ -69,12 +69,34 @@
 
     </mat-tab-group>
   </mat-tab>
-  <mat-tab label="Deaths">
-    <div fxLayout="column" style="align-items: center;">
-      <div fxLayout="row wrap"  fxLayoutAlign="center center">
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="COVID Deaths by day in California" [metric]="'Total Count Deaths'"></app-chhs-graph>
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="COVID Deaths by day in Santa Cruz" [metric]="'Total Count Deaths'"></app-chhs-graph>
+    <mat-tab label="Deaths">
+      <div fxLayout="column" style="align-items: center;">
+        <div fxLayout="row wrap"  fxLayoutAlign="center center">
+          <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="COVID Deaths by day in California" [metric]="'Total Count Deaths'"></app-chhs-graph>
+          <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="COVID Deaths by day in Santa Cruz" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        </div>
+        <div fxLayout="row wrap"  fxLayoutAlign="center center">
+          <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
+                           [counties]="NORCAL_COUNTIES"
+                           title="{{NORCAL_DEATHS_TITLE}}" [metric]="'Total Count Deaths'">
+
+          </app-chhs-graph>
+          <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="SOCAL_COUNTIES"
+                           title="{{SOCAL_DEATHS_TITLE}}" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        </div>
+        <div fxLayout="row wrap"  fxLayoutAlign="center center">
+          <mat-form-field>
+            <mat-label>
+              Pick a county, any county
+            </mat-label>
+            <mat-select  [(value)]="county">
+              <mat-option *ngFor="let c of counties" value="{{ c }}">
+                {{ c }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' Deaths by Day'" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        </div>
       </div>
-    </div>
-  </mat-tab>
+    </mat-tab>
 </mat-tab-group>

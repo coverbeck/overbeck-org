@@ -22,6 +22,14 @@ export class CovidComponent implements OnInit {
   public endDate;
   public county;
   public counties;
+  public readonly NORCAL_COUNTIES = ['San Francisco', 'Santa Clara', 'Alameda', 'San Mateo',
+    'Contra Costa', 'Marin', 'Solano', 'Sonoma', 'Napa'];
+  public readonly SOCAL_COUNTIES = ['Imperial', 'Kern', 'Los Angeles', 'Orange', 'Riverside',
+    'San Bernardino', 'San Diego', 'Santa Barbara', 'San Luis Obispo', 'Ventura'];
+  public readonly SOCAL_CONFIRMED_TITLE = `SoCal Confirmed Cases by Day ( ${this.SOCAL_COUNTIES.join(', ')})`;
+  public readonly NORCAL_CONFIRMED_TITLE = `NorCal Confirmed Cases by Day ( ${this.NORCAL_COUNTIES.join(', ')})`;
+  public readonly SOCAL_DEATHS_TITLE = `SoCal Deaths by Day ( ${this.SOCAL_COUNTIES.join(', ')})`;
+  public readonly NORCAL_DEATHS_TITLE = `NorCal Deaths by Day ( ${this.NORCAL_COUNTIES.join(', ')})`;
 
   readonly CovidChart: typeof CovidChart = CovidChart;
 
@@ -40,9 +48,9 @@ export class CovidComponent implements OnInit {
           this.loading = false;
         }
       );
-    this.httpClient.get('https://covidtracking.com/api/v1/states/ca/daily.json')
-      .subscribe(data => {
-        console.log(data);
-      });
+    // this.httpClient.get('https://covidtracking.com/api/v1/states/ca/daily.json')
+    //   .subscribe(data => {
+    //     console.log(data);
+    //   });
   }
 }
