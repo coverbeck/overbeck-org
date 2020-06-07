@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-comics',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComicsComponent implements OnInit {
 
-  constructor() { }
+  apikey: string;
+
+  constructor(private matDialog: MatDialog) { }
 
   ngOnInit(): void {
+    const APIKEY = 'apikey';
+    this.apikey = sessionStorage.getItem(APIKEY) || '';
+    const config = new MatDialogConfig();
+    config.disableClose = true;
+    config.autoFocus = true;
+    config.data = {apikey: this.apikey};
+    const matDialogRef = this.matDialog.open(DialogComponent, config);
+    matDialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.apikey = data.apikey;
+        sessionStorage.setItem(APIKEY, this.apikey);
+      }
+    });
   }
 
 }

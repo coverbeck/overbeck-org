@@ -1,10 +1,10 @@
 <div fxLayout="column nowrap" style="align-items: center;">
   <div fxLayout="row" class="mat-display-1">Comics</div>
-  <div fxLayout="row wrap">
-    <img src="/api/comics?comic=adam" style="padding: .5rem;">
-    <img src="/api/comics?comic=duplex" style="padding: .5rem;">
-    <img src="/api/comics?comic=pooch" style="padding: .5rem;">
-    <img src="/api/comics?comic=calvin" style="padding: .5rem;">
-    <img src="/api/comics?comic=nancy" style="padding: .5rem;">
+  <div fxLayout="row wrap" *ngIf="apikey.length">
+    <img src="/api/comics?comic=adam&apikey={{ apikey }}" style="padding: .5rem;">
+    <img src="/api/comics?comic=duplex&apikey={{ apikey }}" style="padding: .5rem;">
+    <img src="/api/comics?comic=pooch&apikey={{ apikey }}" style="padding: .5rem;">
+    <img src="/api/comics?comic=calvin&apikey={{ apikey }}" style="padding: .5rem;">
+    <img src="/api/comics?comic=nancy&apikey={{ apikey }}" style="padding: .5rem;">
   </div>
 </div>

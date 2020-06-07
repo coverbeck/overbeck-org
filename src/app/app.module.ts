@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -26,6 +27,7 @@ import { ChhsGraphComponent } from './covid/chhs-graph/chhs-graph.component';
 import { ChhsHorzBarGraphComponent } from './covid/chhs-horz-bar-graph/chhs-horz-bar-graph.component';
 import { CovidComponent } from './covid/covid.component';
 import { TotalsByCountyTableComponent } from './covid/totals-by-county-table/totals-by-county-table.component';
+import { DialogComponent } from './dialog/dialog.component';
 import { HomeComponent } from './home/home.component';
 import { MarkdownComponent } from './rso/markdown/markdown.component';
 import { RsoComponent } from './rso/rso.component';
@@ -41,7 +43,8 @@ import { RsoComponent } from './rso/rso.component';
     ChhsHorzBarGraphComponent,
     MarkdownComponent,
     AnagrammerComponent,
-    TotalsByCountyTableComponent
+    TotalsByCountyTableComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { RsoComponent } from './rso/rso.component';
     ReactiveFormsModule,
     MatSortModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
