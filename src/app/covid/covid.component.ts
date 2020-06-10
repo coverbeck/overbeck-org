@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CovidTrackingRow } from '../shared/models/covid-tracking-row';
 import { CovidRow } from '../shared/models/CovidRow';
 import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
@@ -17,6 +18,7 @@ export enum CovidChart {
 export class CovidComponent implements OnInit {
 
   public data: CovidRow[] =  [];
+  public trackingData: CovidTrackingRow[] = [];
   public loading = true;
   public startDate;
   public endDate;
@@ -48,9 +50,9 @@ export class CovidComponent implements OnInit {
           this.loading = false;
         }
       );
-    // this.httpClient.get('https://covidtracking.com/api/v1/states/ca/daily.json')
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   });
+    this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
+      .subscribe(data => {
+        this.trackingData = data;
+      });
   }
 }

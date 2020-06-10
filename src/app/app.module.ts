@@ -31,6 +31,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { HomeComponent } from './home/home.component';
 import { MarkdownComponent } from './rso/markdown/markdown.component';
 import { RsoComponent } from './rso/rso.component';
+import { LineGraphComponent } from './shared/line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RsoComponent } from './rso/rso.component';
     MarkdownComponent,
     AnagrammerComponent,
     TotalsByCountyTableComponent,
-    DialogComponent
+    DialogComponent,
+    LineGraphComponent
   ],
   imports: [
     BrowserModule,
