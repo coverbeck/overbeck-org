@@ -15,7 +15,7 @@ export class ComicsComponent implements OnInit {
 
   ngOnInit(): void {
     const APIKEY = 'apikey';
-    this.apikey = sessionStorage.getItem(APIKEY) || '';
+    this.apikey = localStorage.getItem(APIKEY) || '';
     const config = new MatDialogConfig();
     config.disableClose = true;
     config.autoFocus = true;
@@ -24,7 +24,7 @@ export class ComicsComponent implements OnInit {
     matDialogRef.afterClosed().subscribe(data => {
       if (data) {
         this.apikey = data.apikey;
-        sessionStorage.setItem(APIKEY, this.apikey);
+        localStorage.setItem(APIKEY, this.apikey);
       }
     });
   }
