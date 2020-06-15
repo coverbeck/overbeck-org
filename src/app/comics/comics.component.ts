@@ -18,24 +18,30 @@ export class ComicsComponent implements OnInit {
 
   ngOnInit(): void {
     this.apikey = sessionStorage.getItem(APIKEY) || '';
+    if (!this.apikey) {
+      this.promptForKey();
+    }
     this.httpClient.get(`/api/comics?comic=adam&apikey=${this.apikey}`).subscribe(
       null,
       (error) => {
         if (error.status === 403) {
-          const config = new MatDialogConfig();
-          config.disableClose = true;
-          config.autoFocus = true;
-          config.data = {apikey: this.apikey};
-          const matDialogRef = this.matDialog.open(DialogComponent, config);
-          matDialogRef.afterClosed().subscribe(data => {
-            if (data) {
-              this.apikey = data.apikey;
-              sessionStorage.setItem(APIKEY, this.apikey);
-            }
-          });
+          this.promptForKey();
         }
       }
     );
   }
 
+  private promptForKey() {
+    const config = new MatDialogConfig();
+    config.disableClose = true;
+    config.autoFocus = true;
+    config.data = { apikey: this.apikey };
+    const matDialogRef = this.matDialog.open(DialogComponent, config);
+    matDialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.apikey = data.apikey;
+        sessionStorage.setItem(APIKEY, this.apikey);
+      }
+    });
+  }
 }
