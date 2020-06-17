@@ -17,7 +17,7 @@ export class ComicsComponent implements OnInit {
   constructor(private matDialog: MatDialog, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.apikey = sessionStorage.getItem(APIKEY) || '';
+    this.apikey = localStorage.getItem(APIKEY) || '';
     if (!this.apikey) {
       this.promptForKey();
     }
@@ -40,7 +40,7 @@ export class ComicsComponent implements OnInit {
     matDialogRef.afterClosed().subscribe(data => {
       if (data) {
         this.apikey = data.apikey;
-        sessionStorage.setItem(APIKEY, this.apikey);
+        localStorage.setItem(APIKEY, this.apikey);
       }
     });
   }
