@@ -12,6 +12,10 @@ export class LineGraphComponent implements OnInit, OnChanges {
 
   @Input()
   public data: CovidTrackingRow[] = [];
+  @Input()
+  public dataTransformer: (data: Array<CovidTrackingRow>)  => [ChartDataSets[], Label[]];
+  @Input()
+  public title: string;
 
   public lineChartData: ChartDataSets[] = [{
     data: [1, 2, 3],
@@ -31,35 +35,17 @@ export class LineGraphComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
+  this.lineChartOptions = {
+      responsive: true,
+      title: {
+        display: true,
+        text: this.title
+      }
+    };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.data.length) {
-      const sortedByDate = this.data.sort((a, b) => a.date - b.date);
-      this.lineChartData = [
-        {
-          data: sortedByDate.map(r => r.total),
-          label: 'Total Tests',
-          fill: false
-        },
-        {
-          data: sortedByDate.map(r => r.positive),
-          label: 'Total Positive',
-          fill: false
-        },
-        {
-          data: sortedByDate.map(r => r.negative),
-          label: 'Total Negative',
-          fill: false
-        },
-        {
-          data: sortedByDate.map(r => r.positive / r.total),
-          label: 'Percentage positive tests',
-          fill: false
-        }
-      ];
-      this.lineChartLabels = sortedByDate.map(r => r.date + '');
-    }
+    this.dataTransformer(this.data);
+    [this.lineChartData, this.lineChartLabels] = this.dataTransformer(this.data);
   }
-
 }
