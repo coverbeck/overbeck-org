@@ -55,7 +55,7 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
           this.lineChartType = 'bar';
 
       }
-      const firstCounty = this.data[0].county
+      const firstCounty = this.data[0].county;
       this.lineChartLabels = this.data.filter(row => row.county === firstCounty).map(row => row.date);
 
       // If we're getting the differences, we don't have the diff for the very first date
