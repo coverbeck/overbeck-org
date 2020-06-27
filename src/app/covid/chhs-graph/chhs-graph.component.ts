@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { CovidRow } from '../../shared/models/CovidRow';
+import { CaliCases } from '../../shared/models/cali-cases';
 import { CovidChart } from '../covid.component';
 import { ChhsGraphService } from './chhs-graph.service';
 
@@ -13,7 +13,7 @@ import { ChhsGraphService } from './chhs-graph.service';
 export class ChhsGraphComponent implements OnInit, OnChanges {
 
   @Input()
-  public data: CovidRow[] = [];
+  public data: CaliCases[] = [];
   @Input()
   public chartType: CovidChart;
   @Input()
@@ -21,7 +21,7 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
   @Input()
   public title: string;
   @Input()
-  public metric: 'Total Count Confirmed' | 'Total Count Deaths';
+  public metric: 'totalcountconfirmed' | 'totalcountdeaths';
 
   public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
@@ -55,8 +55,8 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
           this.lineChartType = 'bar';
 
       }
-      const firstCounty = this.data[0]['County Name'];
-      this.lineChartLabels = this.data.filter(row => row['County Name'] === firstCounty).map(row => row['Most Recent Date']);
+      const firstCounty = this.data[0].county;
+      this.lineChartLabels = this.data.filter(row => row.county === firstCounty).map(row => row.date);
 
       // If we're getting the differences, we don't have the diff for the very first date
       if (this.chartType === CovidChart.CasesByDay || this.chartType === CovidChart.StateCasesByDay) {

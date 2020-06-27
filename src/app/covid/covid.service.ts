@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CovidRow } from '../shared/models/CovidRow';
+import { CaliCases } from '../shared/models/cali-cases';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +8,9 @@ export class CovidService {
 
   constructor() { }
 
-  public dateRange(rows: Array<CovidRow>): [string, string] {
-    const startDate = rows[0]['Most Recent Date'];
-    const endDate = rows[rows.length - 1]['Most Recent Date'];
+  public dateRange(rows: Array<CaliCases>): [string, string] {
+    const startDate = rows[0].date;
+    const endDate = rows[rows.length - 1].date;
     return [startDate, endDate];
   }
 }

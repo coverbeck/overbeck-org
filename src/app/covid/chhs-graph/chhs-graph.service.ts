@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
-import { CovidRow } from '../../shared/models/CovidRow';
+import { CaliCases } from '../../shared/models/cali-cases';
 
 export class StateData {
   confirmed: number;
@@ -10,13 +10,14 @@ export class StateData {
   icuPositivePatients: number;
   icuSuspectedPatients: number;
 
-  constructor(covidRow: CovidRow) {
-    this.confirmed = Number(covidRow['Total Count Confirmed']);
-    this.deaths = Number(covidRow['Total Count Deaths']);
-    this.positivePatients = Number(covidRow['COVID-19 Positive Patients']);
-    this.suspectedPatients = Number(covidRow['Suspected COVID-19 Positive Patients']);
-    this.icuPositivePatients = Number(covidRow['ICU COVID-19 Positive Patients']);
-    this.icuSuspectedPatients = Number(covidRow['ICU COVID-19 Suspected Patients']);
+  constructor(covidRow: CaliCases) {
+    this.confirmed = covidRow.totalcountconfirmed;
+    this.deaths = covidRow.totalcountdeaths;
+    // TODO
+    this.positivePatients = 0;
+    this.suspectedPatients = 0;
+    this.icuPositivePatients = 0;
+    this.icuSuspectedPatients = 0;
   }
 }
 
@@ -265,11 +266,11 @@ export class ChhsGraphService {
 
   constructor() { }
 
-  public cumulativeCasesByDay(rows: Array<CovidRow>, county: string): ChartDataSets {
-    const countyRows = rows.filter(row => row['County Name'] === county);
+  public cumulativeCasesByDay(rows: Array<CaliCases>, county: string): ChartDataSets {
+    const countyRows = rows.filter(row => row.county === county);
     return {
-      data: countyRows.map(row => row['Total Count Confirmed']).map(countStr => Number(countStr)),
-      label: countyRows[0]['County Name'],
+      data: countyRows.map(row => row.totalcountconfirmed).map(countStr => Number(countStr)),
+      label: countyRows[0].county,
       fill: false,
     };
   }
@@ -278,18 +279,18 @@ export class ChhsGraphService {
     return caCounties.map(c => c.County);
   }
 
-  public newCasesByDay(rows: Array<CovidRow>, metric: 'Total Count Confirmed' | 'Total Count Deaths',
+  public newCasesByDay(rows: Array<CaliCases>, metric: 'totalcountconfirmed' | 'totalcountdeaths',
                        counties: Array<string> | null = null): ChartDataSets[] {
-    const countyRows = rows.filter(row => !counties || counties.some(county => row['County Name'] === county));
+    const countyRows = rows.filter(row => !counties || counties.some(county => row.county === county));
     const newCases = this.differences(this.rawData(countyRows, metric));
     return this.chartDataForArray(newCases, metric);
   }
 
 
-  public chartDataForArray(newCases: Array<number>, metric: 'Total Count Confirmed' | 'Total Count Deaths') {
+  public chartDataForArray(newCases: Array<number>, metric: 'totalcountconfirmed' | 'totalcountdeaths') {
     return [{
       data: newCases,
-      label: metric === 'Total Count Confirmed' ? 'New Cases' : 'Deaths',
+      label: metric === 'totalcountconfirmed' ? 'New Cases' : 'Deaths',
     },
       {
         data: this.movingAverage(newCases, 5),
@@ -299,8 +300,8 @@ export class ChhsGraphService {
       }];
   }
 
-  public stateCumulativeCasesByDay(rows: Array<CovidRow>): ChartDataSets {
-    const data = this.rawData(rows, 'Total Count Confirmed');
+  public stateCumulativeCasesByDay(rows: Array<CaliCases>): ChartDataSets {
+    const data = this.rawData(rows, 'totalcountconfirmed');
     return {
       data,
       label: 'California',
@@ -318,17 +319,19 @@ export class ChhsGraphService {
     }).slice(1);
   }
 
-  public rawData(rows: Array<CovidRow>, metric: 'Total Count Confirmed' | 'Total Count Deaths') {
+  public rawData(rows: Array<CaliCases>, metric: 'totalcountconfirmed' | 'totalcountdeaths') {
+    const sortedRows = [...rows];
+    sortedRows.sort((a, b) => a.date.localeCompare(b.date));
     const data = [];
     let acc = 0;
     let date = null;
-    for (const row of rows) {
-      if (row['Most Recent Date'] !== date) {
+    for (const row of sortedRows) {
+      if (row.date !== date) {
         if (date) {
           data.push(acc);
           acc = 0;
         }
-        date = row['Most Recent Date'];
+        date = row.date;
       }
       acc = acc + Number(row[metric]);
     }
@@ -350,23 +353,23 @@ export class ChhsGraphService {
     return result;
   }
 
-  public totalCasesByCounty(rows: Array<CovidRow>, max = 20): Array<CovidRow> {
-    const map = new Map<string, CovidRow>();
-    rows.forEach(row => map.set(row['County Name'], row));
-    const values: IterableIterator<CovidRow> = map.values();
-    const ret = new Array<CovidRow>();
+  public totalCasesByCounty(rows: Array<CaliCases>, max = 20): Array<CaliCases> {
+    const map = new Map<string, CaliCases>();
+    rows.forEach(row => map.set(row.county, row));
+    const values: IterableIterator<CaliCases> = map.values();
+    const ret = new Array<CaliCases>();
     let val = values.next();
     while (!val.done) {
       ret.push(val.value);
       val = values.next();
     }
-    ret.sort((a, b) => Number(b['Total Count Confirmed']) - Number(a['Total Count Confirmed']));
+    ret.sort((a, b) => Number(b.totalcountconfirmed) - Number(a.totalcountconfirmed));
     return ret.slice(0, max);
   }
 
-  public casesPerHundredThousand(rows: Array<CovidRow>, county: string): number {
-    const rowsForCounty = rows.filter(row => row['County Name'] === county);
-    const cases = Number(rowsForCounty[rowsForCounty.length - 1]['Total Count Confirmed']);
+  public casesPerHundredThousand(rows: Array<CaliCases>, county: string): number {
+    const rowsForCounty = rows.filter(row => row.county === county);
+    const cases = Number(rowsForCounty[rowsForCounty.length - 1].totalcountconfirmed);
     const population = this.population(county);
     if (!population) {
       return 0;

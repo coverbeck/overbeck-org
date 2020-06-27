@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { CovidRow } from '../../shared/models/CovidRow';
+import { CaliCases } from '../../shared/models/cali-cases';
 import { ChhsGraphService } from '../chhs-graph/chhs-graph.service';
 import { CovidChart } from '../covid.component';
 
@@ -13,7 +13,7 @@ import { CovidChart } from '../covid.component';
 export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
 
   @Input()
-  public data: CovidRow[] = [];
+  public data: CaliCases[] = [];
   @Input()
   public chartType: CovidChart;
   @Input()
@@ -51,25 +51,25 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
         this.lineChartData = [
           {
             data: covidRows.map(row => this.chhsGraphService
-              .casesPerHundredThousand([row], row['County Name']))
+              .casesPerHundredThousand([row], row.county))
               .sort((a, b) => b - a),
             label: 'Cases per 100,000'
           }
         ];
         this.lineChartLabels = covidRows
           .sort((a, b) => {
-            return this.chhsGraphService.casesPerHundredThousand([b], b['County Name']) -
-              this.chhsGraphService.casesPerHundredThousand([a], a['County Name']);
+            return this.chhsGraphService.casesPerHundredThousand([b], b.county) -
+              this.chhsGraphService.casesPerHundredThousand([a], a.county);
           })
-          .map(row => row['County Name']);
+          .map(row => row.county);
       } else {
         this.lineChartData = [
           {
-            data: covidRows.map(row => Number(row['Total Count Confirmed'])),
+            data: covidRows.map(row => Number(row.totalcountconfirmed)),
             label: 'Total Confirmed Cases'
           }
         ];
-        this.lineChartLabels = covidRows.map(row => row['County Name']);
+        this.lineChartLabels = covidRows.map(row => row.county);
       }
     }
   }
