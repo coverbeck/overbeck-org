@@ -2,14 +2,33 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { Papa } from 'ngx-papaparse';
+import { map, mergeMap } from 'rxjs/operators';
+import { CaliCases } from '../shared/models/cali-cases';
 import { CovidTrackingRow } from '../shared/models/covid-tracking-row';
-import { CovidRow } from '../shared/models/CovidRow';
 import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
+
 
 export enum CovidChart {
   CasesByDay,
   StateCasesByDay
+}
+
+interface Resource {
+  name: string;
+  url: string;
+}
+
+interface InnerResult {
+  results: Array<Result>;
+}
+interface SearchResult {
+  result: InnerResult;
+}
+interface Result {
+  name: string;
+  resources: Array<Resource>;
 }
 
 @Component({
@@ -19,7 +38,7 @@ export enum CovidChart {
 })
 export class CovidComponent implements OnInit {
 
-  public data: CovidRow[] =  [];
+  public data: CaliCases[] =  [];
   public trackingData: CovidTrackingRow[] = [];
   public loading = true;
   public startDate;
@@ -39,22 +58,30 @@ export class CovidComponent implements OnInit {
 
   constructor(private httpClient: HttpClient,
               private covidService: CovidService,
-              private chhsGraphService: ChhsGraphService) {
+              private chhsGraphService: ChhsGraphService,
+              private csvParser: Papa) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<Array<CovidRow>>('/api/covid')
+
+    this.httpClient.get<SearchResult>('https://data.ca.gov/api/3/action/package_search?q=covid')
+      .pipe(
+        map(data => {
+          const results = data.result.results;
+          const result = results.find(r => r.name === 'covid-19-cases');
+          return result.resources.find(r => r.name === 'COVID-19 Cases').url;
+        }),
+        mergeMap(url => {
+          return this.httpClient.get(url, {responseType: 'text'});
+        })
+      )
       .subscribe(data => {
-          this.counties = this.chhsGraphService.countyNames();
-          this.county = this.counties[0];
-          this.data = data;
-          [this.startDate, this.endDate] = this.covidService.dateRange(data);
-          this.loading = false;
-        }
-      );
+        this.data = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data;
+      });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
       .subscribe(data => {
         this.trackingData = data;
+        this.loading = false;
       });
   }
 

@@ -22,17 +22,17 @@
   <mat-tab label="New Cases">
     <div fxLayout="column" style="align-items: center;">
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New confirmed cases by day in California" [metric]="'Total Count Confirmed'"></app-chhs-graph>
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="New confirmed cases by day in Santa Cruz" [metric]="'Total Count Confirmed'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="New confirmed cases by day in California" [metric]="'totalcountconfirmed'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="New confirmed cases by day in Santa Cruz" [metric]="'totalcountconfirmed'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
                          [counties]="NORCAL_COUNTIES"
-                         title="{{ NORCAL_CONFIRMED_TITLE}}" [metric]="'Total Count Confirmed'">
+                         title="{{ NORCAL_CONFIRMED_TITLE}}" [metric]="'totalcountconfirmed'">
 
         </app-chhs-graph>
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="SOCAL_COUNTIES"
-                         title="{{ SOCAL_CONFIRMED_TITLE}}" [metric]="'Total Count Confirmed'"></app-chhs-graph>
+                         title="{{ SOCAL_CONFIRMED_TITLE}}" [metric]="'totalcountconfirmed'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <mat-form-field>
@@ -45,7 +45,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' confirmed cases by day'" [metric]="'Total Count Confirmed'"></app-chhs-graph>
+        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' confirmed cases by day'" [metric]="'totalcountconfirmed'"></app-chhs-graph>
       </div>
     </div>
   </mat-tab>
@@ -72,17 +72,17 @@
   <mat-tab label="Deaths">
     <div fxLayout="column" style="align-items: center;">
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="COVID Deaths by day in California" [metric]="'Total Count Deaths'"></app-chhs-graph>
-        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="COVID Deaths by day in Santa Cruz" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.StateCasesByDay" title="COVID Deaths by day in California" [metric]="'totalcountdeaths'"></app-chhs-graph>
+        <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="['Santa Cruz']" title="COVID Deaths by day in Santa Cruz" [metric]="'totalcountdeaths'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay"
                          [counties]="NORCAL_COUNTIES"
-                         title="{{NORCAL_DEATHS_TITLE}}" [metric]="'Total Count Deaths'">
+                         title="{{NORCAL_DEATHS_TITLE}}" [metric]="'totalcountdeaths'">
 
         </app-chhs-graph>
         <app-chhs-graph  [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="SOCAL_COUNTIES"
-                         title="{{SOCAL_DEATHS_TITLE}}" [metric]="'Total Count Deaths'"></app-chhs-graph>
+                         title="{{SOCAL_DEATHS_TITLE}}" [metric]="'totalcountdeaths'"></app-chhs-graph>
       </div>
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
         <mat-form-field>
@@ -95,7 +95,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' Deaths by Day'" [metric]="'Total Count Deaths'"></app-chhs-graph>
+        <app-chhs-graph [data]="data" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' Deaths by Day'" [metric]="'totalcountdeaths'"></app-chhs-graph>
       </div>
     </div>
   </mat-tab>

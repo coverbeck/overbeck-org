@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CovidRow } from '../../shared/models/CovidRow';
+import { CaliCases } from '../../shared/models/cali-cases';
 import { ChhsGraphService } from '../chhs-graph/chhs-graph.service';
 
 interface CountyData {
@@ -18,7 +18,7 @@ interface CountyData {
 export class TotalsByCountyTableComponent implements OnInit, OnChanges {
 
   @Input()
-  public data: Array<CovidRow>;
+  public data: Array<CaliCases>;
   dataSource: MatTableDataSource<CountyData>;
   displayedColumns: string[] = ['index', 'county', 'total', 'totalPer100K', 'population'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -37,10 +37,10 @@ export class TotalsByCountyTableComponent implements OnInit, OnChanges {
       const covidRows = this.chhsGraphService.totalCasesByCounty(this.data, 75);
       this.dataSource.data = covidRows.map(row => {
         return {
-          county: row['County Name'],
-          total: Number(row['Total Count Confirmed']),
-          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row['County Name']),
-          population: this.chhsGraphService.population(row['County Name'])
+          county: row.county,
+          total: Number(row.totalcountconfirmed),
+          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row.county),
+          population: this.chhsGraphService.population(row.county)
         };
       });
       this.dataSource.sort = this.sort;
