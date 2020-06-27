@@ -80,6 +80,8 @@ export class CovidComponent implements OnInit {
       });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
       .subscribe(data => {
+        this.counties = this.chhsGraphService.countyNames();
+        this.county = this.counties[0];
         this.trackingData = data;
         this.loading = false;
       });
