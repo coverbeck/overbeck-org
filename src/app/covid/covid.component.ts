@@ -76,14 +76,16 @@ export class CovidComponent implements OnInit {
         })
       )
       .subscribe(data => {
-        this.data = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data;
+        this.data = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data
+          .filter(row => row.county); // There is a null county somehow
+        [this.startDate, this.endDate] = this.covidService.dateRange(this.data);
+        this.loading = false;
       });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
       .subscribe(data => {
         this.counties = this.chhsGraphService.countyNames();
         this.county = this.counties[0];
         this.trackingData = data;
-        this.loading = false;
       });
   }
 

@@ -9,8 +9,10 @@ export class CovidService {
   constructor() { }
 
   public dateRange(rows: Array<CaliCases>): [string, string] {
-    const startDate = rows[0].date;
-    const endDate = rows[rows.length - 1].date;
+    const sortedRows = [...rows];
+    sortedRows.sort((a, b) => a.date.localeCompare(b.date));
+    const startDate = sortedRows[0].date;
+    const endDate = sortedRows[sortedRows.length - 1].date;
     return [startDate, endDate];
   }
 }
