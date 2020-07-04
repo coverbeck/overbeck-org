@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
-import { CaliCases } from '../../shared/models/cali-cases';
+import { CaliCases } from '../../shared/models/cali-model';
 
 export class StateData {
   confirmed: number;

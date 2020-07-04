@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CaliCases } from '../shared/models/cali-cases';
+import { CaliCases } from '../shared/models/cali-model';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,7 @@ import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Papa } from 'ngx-papaparse';
 import { map, mergeMap } from 'rxjs/operators';
-import { CaliCases } from '../shared/models/cali-cases';
+import { CaliCases } from '../shared/models/cali-model';
 import { CovidTrackingRow } from '../shared/models/covid-tracking-row';
 import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
@@ -38,7 +38,7 @@ interface Result {
 })
 export class CovidComponent implements OnInit {
 
-  public data: CaliCases[] =  [];
+  public cases: CaliCases[] =  [];
   public trackingData: CovidTrackingRow[] = [];
   public loading = true;
   public startDate;
@@ -69,16 +69,19 @@ export class CovidComponent implements OnInit {
         map(data => {
           const results = data.result.results;
           const result = results.find(r => r.name === 'covid-19-cases');
-          return result.resources.find(r => r.name === 'COVID-19 Cases').url;
+          const caseUrl = result.resources.find(r => r.name === 'COVID-19 Cases').url;
+          const hostpitals = results.find(r => r.name === 'covid-19-hospital-data');
+          console.log(hostpitals);
+          return caseUrl;
         }),
         mergeMap(url => {
           return this.httpClient.get(url, {responseType: 'text'});
         })
       )
       .subscribe(data => {
-        this.data = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data
+        this.cases = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data
           .filter(row => row.county); // There is a null county somehow
-        [this.startDate, this.endDate] = this.covidService.dateRange(this.data);
+        [this.startDate, this.endDate] = this.covidService.dateRange(this.cases);
         this.loading = false;
       });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')

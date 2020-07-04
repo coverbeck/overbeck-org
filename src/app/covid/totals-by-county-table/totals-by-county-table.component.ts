@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CaliCases } from '../../shared/models/cali-cases';
+import { CaliCases } from '../../shared/models/cali-model';
 import { ChhsGraphService } from '../chhs-graph/chhs-graph.service';
 
 interface CountyData {
