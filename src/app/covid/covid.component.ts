@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Papa } from 'ngx-papaparse';
-import { map, mergeMap } from 'rxjs/operators';
-import { CaliCases } from '../shared/models/cali-model';
+import { forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { CaliCases, HospitalData } from '../shared/models/cali-model';
 import { CovidTrackingRow } from '../shared/models/covid-tracking-row';
 import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
@@ -39,6 +40,7 @@ interface Result {
 export class CovidComponent implements OnInit {
 
   public cases: CaliCases[] =  [];
+  public hospitals: HospitalData[] = [];
   public trackingData: CovidTrackingRow[] = [];
   public loading = true;
   public startDate;
@@ -70,18 +72,24 @@ export class CovidComponent implements OnInit {
           const results = data.result.results;
           const result = results.find(r => r.name === 'covid-19-cases');
           const caseUrl = result.resources.find(r => r.name === 'COVID-19 Cases').url;
-          const hostpitals = results.find(r => r.name === 'covid-19-hospital-data');
-          console.log(hostpitals);
-          return caseUrl;
+          const hospitals = results.find(r => r.name === 'covid-19-hospital-data');
+          const hospitalsUrl = hospitals.resources.find(r => r.name === 'Hospitals By County').url;
+          return [caseUrl, hospitalsUrl];
         }),
-        mergeMap(url => {
-          return this.httpClient.get(url, {responseType: 'text'});
+        switchMap((urls) => {
+          const [casesUrl, hospitalsUrl] = urls;
+          return forkJoin([
+            this.httpClient.get(casesUrl, {responseType: 'text'}),
+            this.httpClient.get(hospitalsUrl, {responseType: 'text'})]);
         })
       )
-      .subscribe(data => {
-        this.cases = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data
+      .subscribe((data: [string, string]) => {
+        const [cases, hospitalData] = data;
+        this.cases = this.csvParser.parse(cases, { header: true, dynamicTyping: true }).data
           .filter(row => row.county); // There is a null county somehow
         [this.startDate, this.endDate] = this.covidService.dateRange(this.cases);
+        this.hospitals = this.csvParser.parse(hospitalData, {header: true, dynamicTyping: true})
+          .data.filter(row => row.county);
         this.loading = false;
       });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
