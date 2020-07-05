@@ -1,1 +1,5 @@
-<p>hospitalization works!</p>
+<div fxLayout="column" style="align-items: center;">
+  <div fxLayout="row wrap"  fxLayoutAlign="center center" >
+    <app-line-graph [lineChartData]="bedsByCounty" [lineChartLabels]="bedsByCountyLabels" title="Beds" ></app-line-graph>
+  </div>
+</div>
