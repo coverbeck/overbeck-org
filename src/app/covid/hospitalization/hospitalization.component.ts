@@ -14,8 +14,10 @@ export class HospitalizationComponent implements OnInit, OnChanges {
   @Input()
   public data: HospitalData[] = [];
 
-  public bedsByCounty: ChartDataSets[] = [];
-  public bedsByCountyLabels: Label[];
+  public santaCruzBeds: ChartDataSets[] = [];
+  public santaCruzBedsLabels: Label[];
+  public californiaBeds: ChartDataSets[] = [];
+  public californiaBedsLabels: Label[];
 
   constructor(private hospitalizationService: HospitalizationService) { }
 
@@ -24,11 +26,14 @@ export class HospitalizationComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.data.length) {
-      const hospitalData = this.data
+      const santaCruzData = this.data
         .filter(r => r.county === 'Santa Cruz')
         .filter(r => r.all_hospital_beds);
-      this.bedsByCountyLabels = this.hospitalizationService.bedsLabels(hospitalData);
-      this.bedsByCounty = this.hospitalizationService.beds(hospitalData);
+      this.santaCruzBedsLabels = this.hospitalizationService.bedsLabels(santaCruzData);
+      this.santaCruzBeds = this.hospitalizationService.beds(santaCruzData);
+      const agg = this.hospitalizationService.aggregateBedsByDay(this.data);
+      this.californiaBeds = this.hospitalizationService.beds(agg);
+      this.californiaBedsLabels = this.hospitalizationService.bedsLabels(agg);
     }
   }
 
