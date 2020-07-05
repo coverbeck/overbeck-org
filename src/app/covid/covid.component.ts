@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Papa } from 'ngx-papaparse';
-import { map, mergeMap } from 'rxjs/operators';
-import { CaliCases } from '../shared/models/cali-cases';
+import { forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { CaliCases, HospitalData } from '../shared/models/cali-model';
 import { CovidTrackingRow } from '../shared/models/covid-tracking-row';
 import { ChhsGraphService } from './chhs-graph/chhs-graph.service';
 import { CovidService } from './covid.service';
@@ -38,8 +39,8 @@ interface Result {
 })
 export class CovidComponent implements OnInit {
 
-  public data: CaliCases[] =  [];
-  public trackingData: CovidTrackingRow[] = [];
+  public cases: CaliCases[] =  [];
+  public hospitalData: HospitalData[] = [];
   public loading = true;
   public startDate;
   public endDate;
@@ -54,7 +55,15 @@ export class CovidComponent implements OnInit {
   public readonly SOCAL_DEATHS_TITLE = `SoCal Deaths by Day ( ${this.SOCAL_COUNTIES.join(', ')})`;
   public readonly NORCAL_DEATHS_TITLE = `NorCal Deaths by Day ( ${this.NORCAL_COUNTIES.join(', ')})`;
 
+  public cumulativeTestData: ChartDataSets[];
+  public dailyTestData: ChartDataSets[];
+  public dailyPositiveTestData: ChartDataSets[];
+  public testLabels: Label[];
+  public rateLabels: Label[];
+
   readonly CovidChart: typeof CovidChart = CovidChart;
+  private readonly END_FUNKY_DATA = 20200425; // Negative/positive testing rates are funky before this
+
 
   constructor(private httpClient: HttpClient,
               private covidService: CovidService,
@@ -69,29 +78,51 @@ export class CovidComponent implements OnInit {
         map(data => {
           const results = data.result.results;
           const result = results.find(r => r.name === 'covid-19-cases');
-          return result.resources.find(r => r.name === 'COVID-19 Cases').url;
+          const caseUrl = result.resources.find(r => r.name === 'COVID-19 Cases').url;
+          const hospitals = results.find(r => r.name === 'covid-19-hospital-data');
+          const hospitalsUrl = hospitals.resources.find(r => r.name === 'Hospitals By County').url;
+          return [caseUrl, hospitalsUrl];
         }),
-        mergeMap(url => {
-          return this.httpClient.get(url, {responseType: 'text'});
+        switchMap((urls) => {
+          const [casesUrl, hospitalsUrl] = urls;
+          return forkJoin([
+            this.httpClient.get(casesUrl, {responseType: 'text'}),
+            this.httpClient.get(hospitalsUrl, {responseType: 'text'})]);
         })
       )
-      .subscribe(data => {
-        this.data = this.csvParser.parse(data, { header: true, dynamicTyping: true }).data
+      .subscribe((data: [string, string]) => {
+        const [cases, hospitalData] = data;
+        this.cases = this.csvParser.parse(cases, { header: true, dynamicTyping: true }).data
           .filter(row => row.county); // There is a null county somehow
-        [this.startDate, this.endDate] = this.covidService.dateRange(this.data);
+        [this.startDate, this.endDate] = this.covidService.dateRange(this.cases);
+        this.hospitalData = this.csvParser.parse(hospitalData, {header: true, dynamicTyping: true})
+          .data.filter(row => row.county);
         this.loading = false;
       });
     this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
       .subscribe(data => {
         this.counties = this.chhsGraphService.countyNames();
         this.county = this.counties[0];
-        this.trackingData = data;
+        this.testLabels = this.testingLabels(data);
+        this.rateLabels = this.ratingLabels(data);
+        this.cumulativeTestData = this.cumulativeTests(data);
+        this.dailyPositiveTestData = this.dailyPositiveTestRate(data);
+        this.dailyTestData = this.dailyTests(data);
       });
   }
 
-  cumulativeTests(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  testingLabels(data: Array<CovidTrackingRow>): Label[] {
+    const sortedByDate = data.sort((a, b) => a.date - b.date);
+    return sortedByDate.map(r => r.date + '');
+  }
+
+  ratingLabels(data: Array<CovidTrackingRow>): Label[] {
+    return this.testingLabels(data.filter(r => r.date > this.END_FUNKY_DATA ));
+  }
+
+  cumulativeTests(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data.sort((a, b) => a.date - b.date);
     const lineChartData = [
@@ -116,13 +147,13 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    // const lineChartLabels = sortedByDate.map(r => r.date + '');
+    return lineChartData;
   }
 
-  dailyTests(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  dailyTests(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data.sort((a, b) => a.date - b.date);
     const lineChartData = [
@@ -137,17 +168,16 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    return lineChartData;
   }
 
-  dailyPositiveTestRate(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  dailyPositiveTestRate(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data
       // Funky data before then
-      .filter(r => r.date > 20200425 )
+      .filter(r => r.date > this.END_FUNKY_DATA )
       .sort((a, b) => a.date - b.date);
     const dailyPercents = sortedByDate.map(r => r.positiveIncrease / (r.positiveIncrease + r.negativeIncrease) * 100);
 
@@ -176,7 +206,6 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    return lineChartData;
   }
 }

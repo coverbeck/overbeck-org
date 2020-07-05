@@ -26,6 +26,7 @@ import { ComicsComponent } from './comics/comics.component';
 import { ChhsGraphComponent } from './covid/chhs-graph/chhs-graph.component';
 import { ChhsHorzBarGraphComponent } from './covid/chhs-horz-bar-graph/chhs-horz-bar-graph.component';
 import { CovidComponent } from './covid/covid.component';
+import { HospitalizationComponent } from './covid/hospitalization/hospitalization.component';
 import { TotalsByCountyTableComponent } from './covid/totals-by-county-table/totals-by-county-table.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { HomeComponent } from './home/home.component';
@@ -46,7 +47,8 @@ import { LineGraphComponent } from './shared/line-graph/line-graph.component';
     AnagrammerComponent,
     TotalsByCountyTableComponent,
     DialogComponent,
-    LineGraphComponent
+    LineGraphComponent,
+    HospitalizationComponent
   ],
   imports: [
     BrowserModule,

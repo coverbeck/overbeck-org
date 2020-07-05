@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { CaliCases } from '../../shared/models/cali-cases';
+import { CaliCases } from '../../shared/models/cali-model';
 import { CovidChart } from '../covid.component';
 import { ChhsGraphService } from './chhs-graph.service';
 
