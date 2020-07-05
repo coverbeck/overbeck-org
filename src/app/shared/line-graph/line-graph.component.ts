@@ -1,28 +1,25 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
-import { CovidTrackingRow } from '../models/covid-tracking-row';
 
 @Component({
   selector: 'app-line-graph',
   templateUrl: './line-graph.component.html',
   styleUrls: ['./line-graph.component.scss']
 })
-export class LineGraphComponent implements OnInit, OnChanges {
+export class LineGraphComponent implements OnInit {
 
   @Input()
-  public data: CovidTrackingRow[] = [];
-  @Input()
-  public dataTransformer: (data: Array<CovidTrackingRow>)  => [ChartDataSets[], Label[]];
-  @Input()
-  public title: string;
-
   public lineChartData: ChartDataSets[] = [{
     data: [1, 2, 3],
     label: 'Testing'
   }];
+  @Input()
   public lineChartLabels: Label[] = [];
-  public lineChartOptions: ChartOptions = { };
+  @Input()
+  public title: string;
+
+  public lineChartOptions: ChartOptions = {};
 
   public lineChartColors: Color[] = [
     {
@@ -32,10 +29,11 @@ export class LineGraphComponent implements OnInit, OnChanges {
   ];
   public lineChartLegend = true;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
-  this.lineChartOptions = {
+    this.lineChartOptions = {
       responsive: true,
       title: {
         display: true,
@@ -44,8 +42,4 @@ export class LineGraphComponent implements OnInit, OnChanges {
     };
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.dataTransformer(this.data);
-    [this.lineChartData, this.lineChartLabels] = this.dataTransformer(this.data);
-  }
 }

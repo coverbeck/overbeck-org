@@ -40,8 +40,7 @@ interface Result {
 export class CovidComponent implements OnInit {
 
   public cases: CaliCases[] =  [];
-  public hospitals: HospitalData[] = [];
-  public trackingData: CovidTrackingRow[] = [];
+  public hospitalData: HospitalData[] = [];
   public loading = true;
   public startDate;
   public endDate;
@@ -56,7 +55,15 @@ export class CovidComponent implements OnInit {
   public readonly SOCAL_DEATHS_TITLE = `SoCal Deaths by Day ( ${this.SOCAL_COUNTIES.join(', ')})`;
   public readonly NORCAL_DEATHS_TITLE = `NorCal Deaths by Day ( ${this.NORCAL_COUNTIES.join(', ')})`;
 
+  public cumulativeTestData: ChartDataSets[];
+  public dailyTestData: ChartDataSets[];
+  public dailyPositiveTestData: ChartDataSets[];
+  public testLabels: Label[];
+  public rateLabels: Label[];
+
   readonly CovidChart: typeof CovidChart = CovidChart;
+  private readonly END_FUNKY_DATA = 20200425; // Negative/positive testing rates are funky before this
+
 
   constructor(private httpClient: HttpClient,
               private covidService: CovidService,
@@ -88,7 +95,7 @@ export class CovidComponent implements OnInit {
         this.cases = this.csvParser.parse(cases, { header: true, dynamicTyping: true }).data
           .filter(row => row.county); // There is a null county somehow
         [this.startDate, this.endDate] = this.covidService.dateRange(this.cases);
-        this.hospitals = this.csvParser.parse(hospitalData, {header: true, dynamicTyping: true})
+        this.hospitalData = this.csvParser.parse(hospitalData, {header: true, dynamicTyping: true})
           .data.filter(row => row.county);
         this.loading = false;
       });
@@ -96,13 +103,26 @@ export class CovidComponent implements OnInit {
       .subscribe(data => {
         this.counties = this.chhsGraphService.countyNames();
         this.county = this.counties[0];
-        this.trackingData = data;
+        this.testLabels = this.testingLabels(data);
+        this.rateLabels = this.ratingLabels(data);
+        this.cumulativeTestData = this.cumulativeTests(data);
+        this.dailyPositiveTestData = this.dailyPositiveTestRate(data);
+        this.dailyTestData = this.dailyTests(data);
       });
   }
 
-  cumulativeTests(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  testingLabels(data: Array<CovidTrackingRow>): Label[] {
+    const sortedByDate = data.sort((a, b) => a.date - b.date);
+    return sortedByDate.map(r => r.date + '');
+  }
+
+  ratingLabels(data: Array<CovidTrackingRow>): Label[] {
+    return this.testingLabels(data.filter(r => r.date > this.END_FUNKY_DATA ));
+  }
+
+  cumulativeTests(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data.sort((a, b) => a.date - b.date);
     const lineChartData = [
@@ -127,13 +147,13 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    // const lineChartLabels = sortedByDate.map(r => r.date + '');
+    return lineChartData;
   }
 
-  dailyTests(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  dailyTests(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data.sort((a, b) => a.date - b.date);
     const lineChartData = [
@@ -148,17 +168,16 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    return lineChartData;
   }
 
-  dailyPositiveTestRate(data: Array<CovidTrackingRow>): [ChartDataSets[], Label[]] {
+  dailyPositiveTestRate(data: Array<CovidTrackingRow>): ChartDataSets[] {
     if (!data) {
-      return [[], []];
+      return [];
     }
     const sortedByDate = data
       // Funky data before then
-      .filter(r => r.date > 20200425 )
+      .filter(r => r.date > this.END_FUNKY_DATA )
       .sort((a, b) => a.date - b.date);
     const dailyPercents = sortedByDate.map(r => r.positiveIncrease / (r.positiveIncrease + r.negativeIncrease) * 100);
 
@@ -187,7 +206,6 @@ export class CovidComponent implements OnInit {
         fill: false
       }
     ];
-    const lineChartLabels = sortedByDate.map(r => r.date + '');
-    return [lineChartData, lineChartLabels];
+    return lineChartData;
   }
 }

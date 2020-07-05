@@ -99,12 +99,46 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Testing">
+
+  <mat-tab label="Hospitalization">
+    <app-hospitalization [data]="hospitalData"></app-hospitalization>
     <div fxLayout="column" style="align-items: center;">
       <div fxLayout="row wrap"  fxLayoutAlign="center center">
-        <app-line-graph  [data]="trackingData" title="Cumulative Testing" [dataTransformer]="cumulativeTests"></app-line-graph>
-        <app-line-graph  [data]="trackingData" title="Daily Testing" [dataTransformer]="dailyTests"></app-line-graph>
-        <app-line-graph  [data]="trackingData" title="Daily Positive Test Rate Percentage (since April 26)" [dataTransformer]="dailyPositiveTestRate"></app-line-graph>
+<!--        <app-line-graph  [data]="trackingData" title="Hositalization" [dataTransformer]="cumulativeTests"></app-line-graph>-->
+      </div>
+<!--      <div fxLayout="row wrap"  fxLayoutAlign="center center">-->
+<!--        <app-chhs-graph [data]="cases" [chartType]="CovidChart.CasesByDay"-->
+<!--                        [counties]="NORCAL_COUNTIES"-->
+<!--                        title="{{NORCAL_DEATHS_TITLE}}" [metric]="'totalcountdeaths'">-->
+
+<!--        </app-chhs-graph>-->
+<!--        <app-chhs-graph [data]="cases" [chartType]="CovidChart.CasesByDay" [counties]="SOCAL_COUNTIES"-->
+<!--                        title="{{SOCAL_DEATHS_TITLE}}" [metric]="'totalcountdeaths'"></app-chhs-graph>-->
+<!--      </div>-->
+<!--      <div fxLayout="row wrap"  fxLayoutAlign="center center">-->
+<!--        <mat-form-field>-->
+<!--          <mat-label>-->
+<!--            Pick a county, any county-->
+<!--          </mat-label>-->
+<!--          <mat-select  [(value)]="county">-->
+<!--            <mat-option *ngFor="let c of counties" value="{{ c }}">-->
+<!--              {{ c }}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--        <app-chhs-graph [data]="cases" [chartType]="CovidChart.CasesByDay" [counties]="[county]" [title]="county + ' Deaths by Day'" [metric]="'totalcountdeaths'"></app-chhs-graph>-->
+<!--      </div>-->
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Testing">
+    <div fxLayout="column" style="align-items: center;">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <app-line-graph title="Cumulative Testing" [lineChartLabels]="testLabels"
+                        [lineChartData]="cumulativeTestData"></app-line-graph>
+        <app-line-graph title="Daily Testing" [lineChartData]="dailyTestData" [lineChartLabels]="testLabels"></app-line-graph>
+        <app-line-graph title="Daily Positive Test Rate Percentage (since April 26)"
+                        [lineChartData]="dailyPositiveTestData" [lineChartLabels]="rateLabels" ></app-line-graph>
       </div>
     </div>
   </mat-tab>
