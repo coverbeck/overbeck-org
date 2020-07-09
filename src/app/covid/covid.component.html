@@ -107,11 +107,11 @@
   <mat-tab label="Testing">
     <div fxLayout="column" style="align-items: center;">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <app-line-graph title="Daily Positive Test Rate Percentage (since April 26)"
+                        [lineChartData]="dailyPositiveTestData" [lineChartLabels]="rateLabels" ></app-line-graph>
         <app-line-graph title="Cumulative Testing" [lineChartLabels]="testLabels"
                         [lineChartData]="cumulativeTestData"></app-line-graph>
         <app-line-graph title="Daily Testing" [lineChartData]="dailyTestData" [lineChartLabels]="testLabels"></app-line-graph>
-        <app-line-graph title="Daily Positive Test Rate Percentage (since April 26)"
-                        [lineChartData]="dailyPositiveTestData" [lineChartLabels]="rateLabels" ></app-line-graph>
       </div>
     </div>
   </mat-tab>
