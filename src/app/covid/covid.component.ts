@@ -99,7 +99,7 @@ export class CovidComponent implements OnInit {
           .data.filter(row => row.county);
         this.loading = false;
       });
-    this.httpClient.get<Array<CovidTrackingRow>>('https://covidtracking.com/api/v1/states/ca/daily.json')
+    this.httpClient.get<Array<CovidTrackingRow>>('https://api.covidtracking.com/v1/states/ca/daily.json')
       .subscribe(data => {
         this.counties = this.chhsGraphService.countyNames();
         this.county = this.counties[0];
