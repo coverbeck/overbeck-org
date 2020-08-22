@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npx ng serve --proxy-config=proxy.conf.json",
-    "start-localnode": "npx ng serve --proxy-config=proxy.conf.localnode.json",
+    "start-localscala": "npx ng serve --proxy-config=proxy.conf.localscala.json",
     "build": "ng build",
     "build.prod": "ng build --prod",
     "test": "ng test",
