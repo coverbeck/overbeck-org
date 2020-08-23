@@ -1,15 +1,38 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <h1>Charles Overbeck</h1>
-    <span class="menu-spacer"></span>
-    <div>
+<div>
+  <mat-toolbar color="primary">
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <a mat-button class="companyName" routerLink="/">
+      <span>Charles Overbeck's Web Site</span>
+    </a>
+    <span class="example-spacer"></span>
+    <div fxShow="true" fxHide.lt-md="true">
       <a mat-button [routerLink]="['/home']" >Home</a>
       <a mat-button [routerLink]="['/rso']" >My father</a>
       <a mat-button [routerLink]="['/covid']">COVID-19</a>
       <a mat-button [routerLink]="['/comics']" >Comics</a>
       <a mat-button [routerLink]="['/anagrammer']" >Anagrammer</a>
     </div>
-  </mat-toolbar-row>
 
-</mat-toolbar>
-<router-outlet></router-outlet>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlexFill class="sidenav-container">
+
+    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+      <div fxLayout="column">
+        <a mat-button [routerLink]="['/home']" >Home</a>
+        <a mat-button [routerLink]="['/rso']" >My father</a>
+        <a mat-button [routerLink]="['/covid']">COVID-19</a>
+        <a mat-button [routerLink]="['/comics']" >Comics</a>
+        <a mat-button [routerLink]="['/anagrammer']" >Anagrammer</a>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
