@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs/operators';
 
 interface HouseData {
   year: number;
@@ -17,6 +16,7 @@ interface HouseData {
   winningCandidate: string;
 }
 
+
 @Component({
   selector: 'app-elections',
   templateUrl: './elections.component.html',
@@ -24,20 +24,23 @@ interface HouseData {
 })
 export class ElectionsComponent implements OnInit {
 
-  dataSource: MatTableDataSource<HouseData> = new MatTableDataSource<HouseData>();
+
+  dataSource: MatTableDataSource<HouseData> = new MatTableDataSource<HouseData>([
+     {
+      democrat: 1, district: 2, other: 3, republican: 4, state: 'CA', total: 5,
+       winningCandidate: 'blah', winningParty: 'whateev', winningVotes: 6, year: 2000}
+  ]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   displayedColumns: string[] = ['year', 'state', 'district', 'winningParty', 'winningVotes'];
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.httpClient.get<HouseData[]>('/api/elections/house')
-      .pipe(
-        take(25)
-      )
       .subscribe(resp => {
-        this.dataSource = new MatTableDataSource<HouseData>(resp);
+        this.dataSource.data = resp;
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator.firstPage();
       });

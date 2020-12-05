@@ -1,3 +1,5 @@
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -57,6 +59,8 @@ import { LineGraphComponent } from './shared/line-graph/line-graph.component';
   ],
   imports: [
     BrowserModule,
+    CdkTableModule,
+    CdkTreeModule,
     ChartsModule,
     AppRoutingModule,
     HttpClientModule,

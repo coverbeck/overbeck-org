@@ -1,38 +1,43 @@
-<p>
+<div>
+  <p>
   Data from <a href="https://electionlab.mit.edu/data">MIT Election Data + Science Lab</a>
 </p>
 
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 80vw;" matSort>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 80vw;" matSort>
 
-  <ng-container matColumnDef="year">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Year</mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.year}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="state">
-    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">State</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="number"> {{element.state}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">State</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.state}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="district">
-    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">District</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="number"> {{element.district | number}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="district">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">District</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.district | number}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="winningParty">
-    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Party</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="number"> {{element.winningParty }} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="winningParty">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Party
+      </th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.winningParty }} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="winningVotes">
-    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Votes</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="number"> {{element.winningVotes | number}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="winningVotes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Votes
+      </th>
+      <td mat-cell *matCellDef="let element"
+                class="number"> {{element.winningVotes | number}} </td>
+    </ng-container>
 
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-</mat-table>
+  </table>
 
-<mat-paginator [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+</div>
