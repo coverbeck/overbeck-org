@@ -8,7 +8,12 @@
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </div>
   </form>
-  <mat-list>
-    <mat-list-item *ngFor="let d of dataSource" style="height: auto;">{{ d }}</mat-list-item>
-  </mat-list>
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Results</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>
