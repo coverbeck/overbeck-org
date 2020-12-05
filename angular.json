@@ -33,6 +33,10 @@
             ],
             "scripts": [
               "node_modules/marked/lib/marked.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "chart.js",
+              "papaparse"
             ]
           },
           "configurations": {

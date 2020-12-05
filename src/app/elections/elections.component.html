@@ -1,1 +1,38 @@
-<p>elections works!</p>
+<p>
+  Data from <a href="https://electionlab.mit.edu/data">MIT Election Data + Science Lab</a>
+</p>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 80vw;" matSort>
+
+  <ng-container matColumnDef="year">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Year</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.year}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">State</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.state}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="district">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">District</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.district | number}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="winningParty">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Party</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.winningParty }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="winningVotes">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Votes</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="number"> {{element.winningVotes | number}} </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[10, 25, 50]"></mat-paginator>

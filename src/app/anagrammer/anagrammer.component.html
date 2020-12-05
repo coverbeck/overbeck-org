@@ -8,7 +8,7 @@
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </div>
   </form>
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="index">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Results</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
