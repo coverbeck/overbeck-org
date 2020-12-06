@@ -16,9 +16,11 @@
       <a mat-button [routerLink]="['/covid']">COVID-19</a>
       <a mat-button [routerLink]="['/comics']" >Comics</a>
       <a mat-button [routerLink]="['/anagrammer']" >Anagrammer</a>
+      <a mat-button [routerLink]="['/elections']" >Elections</a>
     </div>
 
   </mat-toolbar>
+  <router-outlet></router-outlet>
   <mat-sidenav-container fxFlexFill class="sidenav-container">
 
     <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
@@ -28,6 +30,7 @@
         <a mat-button [routerLink]="['/covid']">COVID-19</a>
         <a mat-button [routerLink]="['/comics']" >Comics</a>
         <a mat-button [routerLink]="['/anagrammer']" >Anagrammer</a>
+        <a mat-button [routerLink]="['/elections']" >Elections</a>
       </div>
     </mat-sidenav>
     <mat-sidenav-content fxFlexFill>

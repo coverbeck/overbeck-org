@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
 import { AnagrammerService } from './anagrammer.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { AnagrammerService } from './anagrammer.service';
 export class AnagrammerComponent implements OnInit {
   public anagramForm;
   public dataSource: Array<string> = [];
+  public displayedColumns: string[] = ['index'];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
 
   constructor(private formBuilder: FormBuilder, private service: AnagrammerService) {
     this.anagramForm = this.formBuilder.group({
