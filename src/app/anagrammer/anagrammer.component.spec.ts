@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AnagrammerComponent } from './anagrammer.component';
@@ -8,7 +8,7 @@ describe('AnagrammerComponent', () => {
   let component: AnagrammerComponent;
   let fixture: ComponentFixture<AnagrammerComponent>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AnagrammerComponent ],
       imports: [ReactiveFormsModule, HttpClientTestingModule]
