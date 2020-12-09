@@ -10,22 +10,35 @@
       <td mat-cell *matCellDef="let element"> {{element.year}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">State</th>
-      <td mat-cell *matCellDef="let element" class="number"> {{element.state}} </td>
+    <ng-container matColumnDef="democratSeats">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Democrat Seats</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.democratSeats | number}} ({{ element.democratSeatsPercent | number: '2.2-2' }}%) </td>
     </ng-container>
 
-    <ng-container matColumnDef="district">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">District</th>
-      <td mat-cell *matCellDef="let element" class="number"> {{element.district | number}} </td>
+    <ng-container matColumnDef="republicanSeats">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Republican Seats</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.republicanSeats | number}} ({{ element.republicanSeatsPercent | number: '2.2-2' }}%) </td>
     </ng-container>
 
-    <ng-container matColumnDef="winningParty">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Party
-      </th>
-      <td mat-cell *matCellDef="let element" class="number"> {{element.winningParty }} </td>
+    <ng-container matColumnDef="independentSeats">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Independent Seats</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.independentSeats | number }} ({{ element.independentSeatsPercent | number: '1.2-2' }}%) </td>
     </ng-container>
 
+    <ng-container matColumnDef="democratVotes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Democrat Votes</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.democratVotes | number }} ({{ element.democratVotesPercent | number: '2.2-2' }}%) </td>
+    </ng-container>
+
+    <ng-container matColumnDef="republicanVotes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Republican Votes</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.republicanVotes | number }} ({{ element.republicanVotesPercent | number: '2.2-2' }}%)</td>
+    </ng-container>
+
+    <ng-container matColumnDef="independentVotes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Independent Votes</th>
+      <td mat-cell *matCellDef="let element" class="number"> {{element.independentVotes | number }} ({{ element.independentVotesPercent | number: '1.2-2' }}%)</td>
+    </ng-container>
     <ng-container matColumnDef="winningVotes">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="number">Winning Votes
       </th>
@@ -39,5 +52,5 @@
 
   </table>
 
-  <mat-paginator [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+  <mat-paginator [pageSize]="25" [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
 </div>
