@@ -53,4 +53,7 @@
   </table>
 
   <mat-paginator [pageSize]="25" [pageSizeOptions]="[10, 25, 50]"></mat-paginator>
+
+  <app-line-graph title="US House Election Data"
+  [lineChartData]="graphData" [lineChartLabels]="labels" ></app-line-graph>
 </div>
