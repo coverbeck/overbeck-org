@@ -1,0 +1,9 @@
+<h1>My Weather</h1>
+<p>I have an <a href="https://ambientweather.com/amws2902.html">Ambient Weather Station</a>.
+Here are its readings:</p>
+
+Outdoor temperature (F): {{ weatherData?.outdoorTemp | number: '1.2'}}
+<br>
+Indoor temperature (F): {{ weatherData?.indoorTemp | number: '1.2'}}
+<br>
+Windspeed (MPH): {{ weatherData?.windSpeedMph | number: '1.2'}}

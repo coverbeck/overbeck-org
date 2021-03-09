@@ -39,6 +39,7 @@ import { HomeComponent } from './home/home.component';
 import { MarkdownComponent } from './rso/markdown/markdown.component';
 import { RsoComponent } from './rso/rso.component';
 import { LineGraphComponent } from './shared/line-graph/line-graph.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { LineGraphComponent } from './shared/line-graph/line-graph.component';
     DialogComponent,
     LineGraphComponent,
     HospitalizationComponent,
-    ElectionsComponent
+    ElectionsComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,
