@@ -14,7 +14,7 @@ export class WeatherComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.httpClient.get<IWeatherData>('/api/weather')
+    this.httpClient.get<IWeatherData>('/api/weather/')
       .subscribe(data => {
         this.weatherData = data;
       });
