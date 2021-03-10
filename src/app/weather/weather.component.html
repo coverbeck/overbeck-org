@@ -7,3 +7,9 @@ Outdoor temperature (F): {{ weatherData?.outdoorTemp | number: '1.2'}}
 Indoor temperature (F): {{ weatherData?.indoorTemp | number: '1.2'}}
 <br>
 Windspeed (MPH): {{ weatherData?.windSpeedMph | number: '1.2'}}
+<br>
+Wind direction (degrees from which the wind is blowing): {{  weatherData?.windDirection }}&deg;
+<br>
+Daily rain: {{  weatherData?.dailyRain | number: '1.2'}}
+<br>
+Reading time: {{ weatherData?.date | date : 'short' }}
