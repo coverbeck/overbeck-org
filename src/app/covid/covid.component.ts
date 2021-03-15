@@ -73,14 +73,14 @@ export class CovidComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.httpClient.get<SearchResult>('https://data.ca.gov/api/3/action/package_search?q=covid')
+    this.httpClient.get<SearchResult>('https://data.ca.gov/api/3/action/package_search?q=covid&rows=100')
       .pipe(
         map(data => {
           const results = data.result.results;
-          const result = results.find(r => r.name === 'covid-19-cases');
-          const caseUrl = result.resources.find(r => r.name === 'COVID-19 Cases').url;
-          const hospitals = results.find(r => r.name === 'covid-19-hospital-data');
-          const hospitalsUrl = hospitals.resources.find(r => r.name === 'Hospitals By County').url;
+          const result = results.find(r => r.name === 'covid-19-time-series-metrics-by-county-and-state');
+          const caseUrl = result.resources.find(r => r.name === 'Statewide COVID-19 Cases Deaths').url;
+          const hospitals = results.find(r => r.name === 'covid-19-hospital-data1');
+          const hospitalsUrl = hospitals.resources.find(r => r.name === 'Statewide Covid-19 Hospital County Data').url;
           return [caseUrl, hospitalsUrl];
         }),
         switchMap((urls) => {
@@ -93,7 +93,13 @@ export class CovidComponent implements OnInit {
       .subscribe((data: [string, string]) => {
         const [cases, hospitalData] = data;
         this.cases = this.csvParser.parse(cases, { header: true, dynamicTyping: true }).data
-          .filter(row => row.county); // There is a null county somehow
+          .filter(row => row.area && row.date) // There is a null county somehow
+          .map((caliCase, index, arr) => {
+            caliCase.county = caliCase.area;
+            // caliCase.totalcountconfirmed = (caliCase.cases || 0) + (index === 0 ? 0 : arr[index - 1].totalcountconfirmed);
+            // caliCase.totalcountdeaths = (caliCase.deaths || 0) + (index === 0 ? 0 : arr[index - 1].totalcountdeaths);
+            return caliCase;
+          });
         [this.startDate, this.endDate] = this.covidService.dateRange(this.cases);
         this.hospitalData = this.csvParser.parse(hospitalData, {header: true, dynamicTyping: true})
           .data.filter(row => row.county);

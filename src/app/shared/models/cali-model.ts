@@ -1,10 +1,13 @@
 export class CaliCases {
   county: string;
+  area: string;
   date: string;
   newcountconfirmed: number;
   newcountdeaths: number;
   totalcountconfirmed: number;
   totalcountdeaths: number;
+  cases: number;
+  deaths: number;
 }
 
 // tslint:disable:variable-name

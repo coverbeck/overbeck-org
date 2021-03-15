@@ -69,7 +69,7 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
             label: 'Total Confirmed Cases'
           }
         ];
-        this.lineChartLabels = covidRows.map(row => row.county);
+        this.lineChartLabels = covidRows.map(row => row.area);
       }
     }
   }

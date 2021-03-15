@@ -269,8 +269,8 @@ export class ChhsGraphService {
   public cumulativeCasesByDay(rows: Array<CaliCases>, county: string): ChartDataSets {
     const countyRows = rows.filter(row => row.county === county);
     return {
-      data: countyRows.map(row => row.totalcountconfirmed).map(countStr => Number(countStr)),
-      label: countyRows[0].county,
+        data: countyRows.map(row => row.cases).map(countStr => Number(countStr)),
+      label: countyRows[0].area,
       fill: false,
     };
   }
@@ -281,8 +281,8 @@ export class ChhsGraphService {
 
   public newCasesByDay(rows: Array<CaliCases>, metric: 'totalcountconfirmed' | 'totalcountdeaths',
                        counties: Array<string> | null = null): ChartDataSets[] {
-    const countyRows = rows.filter(row => !counties || counties.some(county => row.county === county));
-    const newCases = this.differences(this.rawData(countyRows, metric));
+    const countyRows = rows.filter(row => !counties || counties.some(county => row.area === county));
+    const newCases = this.rawData(countyRows, metric === 'totalcountconfirmed' ? 'cases' : 'deaths');
     return this.chartDataForArray(newCases, metric);
   }
 
@@ -301,7 +301,7 @@ export class ChhsGraphService {
   }
 
   public stateCumulativeCasesByDay(rows: Array<CaliCases>): ChartDataSets {
-    const data = this.rawData(rows, 'totalcountconfirmed');
+    const data = this.rawData(rows, 'cases');
     return {
       data,
       label: 'California',
@@ -319,7 +319,7 @@ export class ChhsGraphService {
     }).slice(1);
   }
 
-  public rawData(rows: Array<CaliCases>, metric: 'totalcountconfirmed' | 'totalcountdeaths') {
+  public rawData(rows: Array<CaliCases>, metric: 'cases' | 'deaths') {
     const sortedRows = [...rows];
     sortedRows.sort((a, b) => a.date.localeCompare(b.date));
     const data = [];
@@ -355,7 +355,7 @@ export class ChhsGraphService {
 
   public totalCasesByCounty(rows: Array<CaliCases>, max = 20): Array<CaliCases> {
     const map = new Map<string, CaliCases>();
-    rows.forEach(row => map.set(row.county, row));
+    rows.forEach(row => map.set(row.area, row));
     const values: IterableIterator<CaliCases> = map.values();
     const ret = new Array<CaliCases>();
     let val = values.next();
@@ -363,13 +363,13 @@ export class ChhsGraphService {
       ret.push(val.value);
       val = values.next();
     }
-    ret.sort((a, b) => Number(b.totalcountconfirmed) - Number(a.totalcountconfirmed));
+    ret.sort((a, b) => Number(b.cases) - Number(a.cases));
     return ret.slice(0, max);
   }
 
   public casesPerHundredThousand(rows: Array<CaliCases>, county: string): number {
-    const rowsForCounty = rows.filter(row => row.county === county);
-    const cases = Number(rowsForCounty[rowsForCounty.length - 1].totalcountconfirmed);
+    const rowsForCounty = rows.filter(row => row.area === county);
+    const cases = Number(rowsForCounty[rowsForCounty.length - 1].cases);
     const population = this.population(county);
     if (!population) {
       return 0;
