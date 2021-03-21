@@ -269,7 +269,7 @@ export class ChhsGraphService {
   public cumulativeCasesByDay(rows: Array<CaliCases>, county: string): ChartDataSets {
     const countyRows = rows.filter(row => row.county === county);
     return {
-        data: countyRows.map(row => row.cases).map(countStr => Number(countStr)),
+      data: countyRows.map(row => row.cases).map(countStr => Number(countStr)),
       label: countyRows[0].area,
       fill: false,
     };
