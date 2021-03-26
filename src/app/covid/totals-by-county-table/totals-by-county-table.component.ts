@@ -37,10 +37,10 @@ export class TotalsByCountyTableComponent implements OnInit, OnChanges {
       const covidRows = this.chhsGraphService.totalCasesByCounty(this.data, 75);
       this.dataSource.data = covidRows.map(row => {
         return {
-          county: row.county,
+          county: row.area,
           total: Number(row.totalcountconfirmed),
-          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row.county),
-          population: this.chhsGraphService.population(row.county)
+          totalPer100K: this.chhsGraphService.casesPerHundredThousand([row], row.area),
+          population: this.chhsGraphService.population(row.area)
         };
       });
       this.dataSource.sort = this.sort;

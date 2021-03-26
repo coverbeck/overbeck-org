@@ -1,6 +1,7 @@
 export class CaliCases {
-  county: string;
   area: string;
+  // tslint:disable-next-line:variable-name
+  area_type: string;
   date: string;
   newcountconfirmed: number;
   newcountdeaths: number;
@@ -8,6 +9,10 @@ export class CaliCases {
   totalcountdeaths: number;
   cases: number;
   deaths: number;
+  // tslint:disable-next-line:variable-name
+  cumulative_deaths: number;
+  // tslint:disable-next-line:variable-name
+  cumulative_cases: number;
 }
 
 // tslint:disable:variable-name

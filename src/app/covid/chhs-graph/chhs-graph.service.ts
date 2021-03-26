@@ -267,7 +267,7 @@ export class ChhsGraphService {
   constructor() { }
 
   public cumulativeCasesByDay(rows: Array<CaliCases>, county: string): ChartDataSets {
-    const countyRows = rows.filter(row => row.county === county);
+    const countyRows = rows.filter(row => row.area === county);
     return {
       data: countyRows.map(row => row.cases).map(countStr => Number(countStr)),
       label: countyRows[0].area,
@@ -369,7 +369,7 @@ export class ChhsGraphService {
 
   public casesPerHundredThousand(rows: Array<CaliCases>, county: string): number {
     const rowsForCounty = rows.filter(row => row.area === county);
-    const cases = Number(rowsForCounty[rowsForCounty.length - 1].cases);
+    const cases = Number(rowsForCounty[rowsForCounty.length - 1].cumulative_cases);
     const population = this.population(county);
     if (!population) {
       return 0;

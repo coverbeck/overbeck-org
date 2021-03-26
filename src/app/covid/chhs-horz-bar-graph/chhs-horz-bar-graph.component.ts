@@ -43,29 +43,31 @@ export class ChhsHorzBarGraphComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.data.length) {
-      const covidRows = this.chhsGraphService.totalCasesByCounty(this.data, 300);
+      const covidRows = this.chhsGraphService.totalCasesByCounty(this.data.filter(r => r.area !== 'California'), 300);
       if (this.popAdjusted) {
         // TODO: Way ugly calculating cases per hundred thousand twice, forcing
         // it to be passed in as an array
         this.lineChartOptions.title.text = 'Total Confirmed Cases by County per 100,000';
         this.lineChartData = [
           {
-            data: covidRows.map(row => this.chhsGraphService
-              .casesPerHundredThousand([row], row.county))
+            data: covidRows
+              .filter(row => row.area !== 'California')
+              .map(row => this.chhsGraphService
+              .casesPerHundredThousand([row], row.area))
               .sort((a, b) => b - a),
             label: 'Cases per 100,000'
           }
         ];
         this.lineChartLabels = covidRows
           .sort((a, b) => {
-            return this.chhsGraphService.casesPerHundredThousand([b], b.county) -
-              this.chhsGraphService.casesPerHundredThousand([a], a.county);
+            return this.chhsGraphService.casesPerHundredThousand([b], b.area) -
+              this.chhsGraphService.casesPerHundredThousand([a], a.area);
           })
-          .map(row => row.county);
+          .map(row => row.area);
       } else {
         this.lineChartData = [
           {
-            data: covidRows.map(row => Number(row.totalcountconfirmed)),
+            data: covidRows.map(row => Number(row.cumulative_cases)),
             label: 'Total Confirmed Cases'
           }
         ];

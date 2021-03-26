@@ -51,12 +51,12 @@ export class ChhsGraphComponent implements OnInit, OnChanges {
           this.lineChartType = 'bar';
           break;
         case CovidChart.StateCasesByDay:
-          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.metric);
+          this.lineChartData = this.chhsGraphService.newCasesByDay(this.data, this.metric, ['California']); // State data now provided
           this.lineChartType = 'bar';
 
       }
-      const firstCounty = this.data[0].county;
-      this.lineChartLabels = this.data.filter(row => row.county === firstCounty).map(row => row.date);
+      const firstCounty = this.data[0].area;
+      this.lineChartLabels = this.data.filter(row => row.area === firstCounty).map(row => row.date);
 
       // If we're getting the differences, we don't have the diff for the very first date
       if (this.chartType === CovidChart.CasesByDay || this.chartType === CovidChart.StateCasesByDay) {

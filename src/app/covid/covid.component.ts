@@ -95,9 +95,6 @@ export class CovidComponent implements OnInit {
         const rows = this.csvParser.parse(cases, { header: true, dynamicTyping: true }).data
           .filter(row => row.area && row.date) // There is a null county somehow
           .map((caliCase, index, arr) => {
-            caliCase.county = caliCase.area;
-            // caliCase.totalcountconfirmed = (caliCase.cases || 0) + (index === 0 ? 0 : arr[index - 1].totalcountconfirmed);
-            // caliCase.totalcountdeaths = (caliCase.deaths || 0) + (index === 0 ? 0 : arr[index - 1].totalcountdeaths);
             return caliCase;
           });
         this.cases = rows.sort((a, b) => a.date.localeCompare(b.date));
