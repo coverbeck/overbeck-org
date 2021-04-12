@@ -73,13 +73,13 @@ export class CovidComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.httpClient.get<SearchResult>('https://data.ca.gov/api/3/action/package_search?q=covid&rows=100')
+    this.httpClient.get<SearchResult>('https://data.chhs.ca.gov/api/3/action/package_search?q=covid&rows=100')
       .pipe(
         map(data => {
           const results = data.result.results;
           const result = results.find(r => r.name === 'covid-19-time-series-metrics-by-county-and-state');
           const caseUrl = result.resources.find(r => r.name === 'Statewide COVID-19 Cases Deaths').url;
-          const hospitals = results.find(r => r.name === 'covid-19-hospital-data1');
+          const hospitals = results.find(r => r.name === 'covid-19-hospital-data');
           const hospitalsUrl = hospitals.resources.find(r => r.name === 'Statewide Covid-19 Hospital County Data').url;
           return [caseUrl, hospitalsUrl];
         }),
