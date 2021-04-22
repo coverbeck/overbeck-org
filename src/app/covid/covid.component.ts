@@ -78,7 +78,7 @@ export class CovidComponent implements OnInit {
         map(data => {
           const results = data.result.results;
           const result = results.find(r => r.name === 'covid-19-time-series-metrics-by-county-and-state');
-          const caseUrl = result.resources.find(r => r.name === 'Statewide COVID-19 Cases Deaths').url;
+          const caseUrl = result.resources.find(r => r.name === 'Statewide COVID-19 Cases Deaths Tests').url;
           const hospitals = results.find(r => r.name === 'covid-19-hospital-data');
           const hospitalsUrl = hospitals.resources.find(r => r.name === 'Statewide Covid-19 Hospital County Data').url;
           return [caseUrl, hospitalsUrl];
