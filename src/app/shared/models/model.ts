@@ -1,3 +1,9 @@
+export interface ILochLomondData {
+  recordingDate: string;
+  percentFull: number;
+  createdDate: string;
+}
+
 export interface IUSHouseDataSlim {
   year: number;
   state: string;
